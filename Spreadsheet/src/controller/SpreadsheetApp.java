@@ -6,10 +6,13 @@ package model.Spreadsheet.src.controller;/*
  */
 
 import model.Spreadsheet.src.model.CellToken;
+import model.Spreadsheet.src.model.LiteralToken;
+import model.Spreadsheet.src.model.OperatorToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Stack;
 
 
 public class SpreadsheetApp {
@@ -49,9 +52,9 @@ public class SpreadsheetApp {
 
         System.out.println("Enter the cell: ");
         inputString = readString();
-        getCellToken(inputString, 0, cellToken);
+        theSpreadsheet.getCellToken(inputString, 0, cellToken);
 
-        System.out.println(printCellToken(cellID));
+        System.out.println(theSpreadsheet.printCellToken(cellID));
         System.out.println(": ");
 
         if ((cellToken.getRow() < 0) ||
@@ -76,13 +79,13 @@ public class SpreadsheetApp {
     private static void menuChangeCellFormula(Spreadsheet theSpreadsheet) {
         String inputCell;
         String inputFormula;
-        CellToken cellToken;
+        CellToken cellToken = new CellToken();
         Stack expTreeTokenStack;
         // ExpressionTreeToken expTreeToken;
 
         System.out.println("Enter the cell to change: ");
         inputCell = readString();
-        theSpreadsheet.getCellToken (inputCell, 0, cellToken);
+        theSpreadsheet.getCellToken(inputCell, 0, cellToken);
 
         // error check to make sure the row and column
         // are within spreadsheet array bounds.
@@ -97,7 +100,7 @@ public class SpreadsheetApp {
 
         System.out.println("Enter the cell's new formula: ");
         inputFormula = readString();
-        expTreeTokenStack = getFormula (inputFormula);
+        expTreeTokenStack = getFormula(inputFormula);
 
         /*
         // This code prints out the expression stack from
@@ -131,8 +134,8 @@ public class SpreadsheetApp {
             System.out.println("a: print all cell formulas");
             System.out.println("c: change the formula of a cell");
     /* BONUS
-            System.out.println("r: read in a spreadsheet from a textfile");
-            System.out.println("s: save the spreadsheet to a textfile");
+            System.out.println("r: read in a spreadsheet from a text file");
+            System.out.println("s: save the spreadsheet to a text file");
      */
             System.out.println();
             System.out.println("q: quit");

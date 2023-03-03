@@ -1,8 +1,8 @@
 package model.Spreadsheet.src.model;
 
 public class CellToken extends Token {
-    private final int myColumn;   // column A = 0, B = 1, ...
-    private final int myRow;
+    private int myColumn;   // column A = 0, B = 1, ...
+    private int myRow;
 
     public CellToken() {
         myColumn = 0;
@@ -15,5 +15,13 @@ public class CellToken extends Token {
 
     public int getColumn() {
         return myColumn;
+    }
+
+    public void setRow(final int theNewRow) {
+        myRow = theNewRow;
+    }
+
+    public void setColumn(final int theNewColumn) {
+        myColumn = theNewColumn;
     }
 }
