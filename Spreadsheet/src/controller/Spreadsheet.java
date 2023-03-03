@@ -39,7 +39,7 @@ public class Spreadsheet {
 
     /**
      * getCellToken
-     *
+     * *
      * Assuming that the next chars in a String (at the given startIndex)
      * is a cell reference, set cellToken's column and row to the
      * cell's column and row.
@@ -49,7 +49,7 @@ public class Spreadsheet {
      * the cell reference.
      * (Possible improvement: instead of returning a CellToken with row and
      * column equal to BadCell, throw an exception that indicates a parsing error.)
-     *
+     * *
      * A cell reference is defined to be a sequence of CAPITAL letters,
      * followed by a sequence of digits (0-9).  The letters refer to
      * columns as follows: A = 0, B = 1, C = 2, ..., Z = 25, AA = 26,
