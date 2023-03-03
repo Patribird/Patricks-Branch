@@ -3,12 +3,29 @@ package model.Spreadsheet.src.model;
 /**
  * Abstract class for the Tokens included in each cell.
  * @author Patrick Hern
- * @version February 28th, 2023
+ * @author Nathameion Montgomery
+ * @version March 2nd, 2023
  */
 public abstract class Token {
     public Token myToken;
 
     public Token getToken() {
         return myToken;
+    }
+
+    String printExpressionTreeToken (Token expTreeToken) {
+        String returnString = "";
+        if (expTreeToken instanceof OperatorToken) {
+            returnString = ((OperatorToken) expTreeToken).getOperatorToken() + " ";
+        } else if (expTreeToken instanceof CellToken) {
+            returnString = printCellToken((CellToken) expTreeToken) + " ";
+        } else if (expTreeToken instanceof LiteralToken) {
+            returnString = ((LiteralToken) expTreeToken).getValue() + " ";
+        } else {
+            // This case should NEVER happen
+            System.out.println("Error in printExpressionTreeToken.");
+            System.exit(0);
+        }
+        return returnString;
     }
 }
