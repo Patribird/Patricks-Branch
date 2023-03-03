@@ -1,11 +1,9 @@
 package model.Spreadsheet.src.model;
 
+import static model.Spreadsheet.src.model.OperatorToken.Plus;
+
 public class ExpressionTreeNode {
-	private final static char Plus = '+';
-	private final static char Minus = '-';
-	private final static char Mult = '*';
-	private final static char Div = '/';
-	private final static char LeftParen = '(';
+
 	public ExpressionTreeNode left;
 
 	public ExpressionTreeNode right;
