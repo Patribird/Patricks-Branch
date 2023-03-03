@@ -103,7 +103,7 @@ public class SpreadsheetApp {
 
         System.out.println("Enter the cell's new formula: ");
         inputFormula = readString();
-        //expTreeTokenStack = getFormula(inputFormula);
+        expTreeTokenStack = getFormula(inputFormula);
 
         /*
         // This code prints out the expression stack from
@@ -115,7 +115,7 @@ public class SpreadsheetApp {
         }
         */
 
-        //theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, expTreeTokenStack);
+        theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, expTreeTokenStack);
         System.out.println();
     }
 
