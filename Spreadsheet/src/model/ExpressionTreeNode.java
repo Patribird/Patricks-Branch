@@ -1,6 +1,6 @@
 package model.Spreadsheet.src.model;
 
-import static model.Spreadsheet.src.model.OperatorToken.Plus;
+import static model.Spreadsheet.src.model.OperatorToken.*;
 
 public class ExpressionTreeNode {
 
