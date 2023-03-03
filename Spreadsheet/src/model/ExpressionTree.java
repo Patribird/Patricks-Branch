@@ -1,5 +1,7 @@
 package model.Spreadsheet.src.model;
 
+import model.Spreadsheet.src.controller.Spreadsheet;
+
 public class ExpressionTree {
 	private boolean myContainsRoot;
 
@@ -16,8 +18,7 @@ public class ExpressionTree {
 		return "";
 	}
 
-//	// Commenting this out since it won't compile yet.
-//	public void evaluate(final Spreadsheet theSpreadsheet) {
-//
-//	}
+	public void evaluate(final Spreadsheet theSpreadsheet) {
+
+	}
 }
