@@ -6,6 +6,7 @@ package model.Spreadsheet.src.controller;/*
  */
 
 import model.Spreadsheet.src.model.*;
+import model.Spreadsheet.src.view.SpreadsheetGUI;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -274,6 +275,7 @@ public class SpreadsheetApp {
 
     public static void main(String[] args) {
         Spreadsheet theSpreadsheet = new Spreadsheet(8);
+        SpreadsheetGUI theGUI = new SpreadsheetGUI();
 
         boolean done = false;
         String command = "";

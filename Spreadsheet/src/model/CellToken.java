@@ -24,4 +24,23 @@ public class CellToken extends Token {
     public void setColumn(final int theNewColumn) {
         myColumn = theNewColumn;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder(getColumnCharacters());
+        result.append(myRow);
+        return result.toString();
+    }
+
+    private String getColumnCharacters() {
+        StringBuilder result = new StringBuilder();
+        int currentRow = myRow;
+        while (currentRow > 0) {
+            int letterNumber = (currentRow % 26 - 2) + 'A';
+            result.append((char) letterNumber);
+            currentRow = currentRow / 26;
+        }
+        return result.toString();
+    }
+
 }
