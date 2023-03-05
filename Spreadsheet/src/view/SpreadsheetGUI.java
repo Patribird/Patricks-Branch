@@ -19,6 +19,8 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     private static CellGUI[][] myCells = new CellGUI[ROWS][COLUMNS];
 
+    private static JPanel cellPanel = new JPanel();
+
     public SpreadsheetGUI() {
         setupGUI();
     }
@@ -37,19 +39,25 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
     private void setupGUI() {
         setTitle("Spreadsheet");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(new Dimension(SCREEN_SIZE));
         setResizable(false);
         setVisible(true);
         setUpCells();
+        add(cellPanel);
+        pack();
+        setSize(new Dimension(SCREEN_SIZE));
     }
 
     private void setUpCells() {
-        setLayout(LAYOUT);
+        cellPanel.setLayout(LAYOUT);
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
                 CellGUI cellAdding = new CellGUI(row, col);
                 myCells[row][col] = cellAdding;
+                cellPanel.add(cellAdding);
+                //System.out.println(row + "," + col);
             }
         }
+        cellPanel.revalidate();
+        cellPanel.setVisible(true);
     }
 }
