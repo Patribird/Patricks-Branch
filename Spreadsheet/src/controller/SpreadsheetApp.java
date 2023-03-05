@@ -54,8 +54,8 @@ public class SpreadsheetApp {
         inputString = readString();
         theSpreadsheet.getCellToken(inputString, 0, cellToken);
 
-        System.out.println(theSpreadsheet.printCellToken(cellToken));
-        System.out.println(": ");
+        System.out.print(theSpreadsheet.printCellToken(cellToken));
+        System.out.print(": ");
 
         if ((cellToken.getRow() < 0) ||
             (cellToken.getRow() >= theSpreadsheet.getNumRows()) ||
@@ -66,7 +66,10 @@ public class SpreadsheetApp {
             return;
         }
 
-        theSpreadsheet.printCellFormula(cellToken);
+        //theSpreadsheet.printCellFormula(cellToken);
+
+        theSpreadsheet.printCellFormula(theSpreadsheet.getCell(cellToken.getRow(), cellToken.getColumn()));
+
         System.out.println();
     }
 

@@ -25,8 +25,8 @@ public class Spreadsheet {
         return mySpreadsheet[0].length;
     }
 
-    public void printCellFormula(CellToken cellToken) {
-
+    public void printCellFormula(Cell cell) {
+        System.out.println(cell.getFormula());
     }
 
     public void printAllFormulas() {
@@ -34,7 +34,8 @@ public class Spreadsheet {
     }
 
     public void changeCellFormulaAndRecalculate(CellToken cellToken, Stack expTreeTokenStack) {
-
+        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell();
+        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormula(expTreeTokenStack);
     }
 
     /**
@@ -174,5 +175,14 @@ public class Spreadsheet {
         // append the row as an integer
         returnString += cellToken.getRow();
         return returnString;
+    }
+
+    public Cell getCell(final int row, final int col) {
+        try {
+            return mySpreadsheet[row][col];
+        } catch (Exception e) {
+            System.out.println("Invalid cell");
+            return null;
+        }
     }
 }

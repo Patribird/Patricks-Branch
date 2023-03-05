@@ -10,4 +10,9 @@ public class LiteralToken extends Token {
     public int getValue() {
         return myLiteral;
     }
+
+    @Override
+    public String toString() {
+        return Integer.toString(myLiteral);
+    }
 }
