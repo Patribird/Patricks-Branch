@@ -14,7 +14,17 @@ public class Spreadsheet {
     }
 
     public void printValues() {
-
+        for (int rows = 0; rows < getNumRows(); rows++) {
+            for (int cols = 0; cols < getNumColumns(); cols++) {
+                if (mySpreadsheet[rows][cols] == null) {
+                    System.out.print("\t0\t");
+                }
+                else {
+                    System.out.print("\t" + mySpreadsheet[rows][cols].getFormula() + "\t");
+                }
+            }
+            System.out.println();
+        }
     }
 
     public int getNumRows() {
@@ -30,7 +40,22 @@ public class Spreadsheet {
     }
 
     public void printAllFormulas() {
-
+        for (int i = 0; i < getNumRows(); i++) {
+            System.out.print("\t" + ((char) (i % 26 + 'A')) + "\t");
+        }
+        System.out.println();
+        for (int rows = 0; rows < getNumRows(); rows++) {
+            System.out.print(rows);
+            for (int cols = 0; cols < getNumColumns(); cols++) {
+                if (mySpreadsheet[rows][cols] == null) {
+                    System.out.print("\t0\t|");
+                }
+                else {
+                    System.out.print("\t" + mySpreadsheet[rows][cols].getFormula() + "\t|");
+                }
+            }
+            System.out.println();
+        }
     }
 
     public void changeCellFormulaAndRecalculate(CellToken cellToken, Stack expTreeTokenStack) {
