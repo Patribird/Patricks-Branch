@@ -6,4 +6,8 @@ public class LiteralToken extends Token {
     public LiteralToken(final int theLiteral) {
         myLiteral = theLiteral;
     }
+
+    public int getValue() {
+        return myLiteral;
+    }
 }

@@ -1,11 +1,16 @@
 package model.Spreadsheet.src.model;
 
+import java.util.Collection;
+import java.util.Stack;
+
 public class SpreadSheetUtility {
     /*
      * Utility functions.
      * You should place these methods in the appropriate classes.
      * @author Donald Chinn
+     * @author Nathameion Montgomery
      */
+    private final static int BadCell = -1;
     /**
      * Return a string associated with a token
      * @param expTreeToken  an ExpressionTreeToken
@@ -38,22 +43,22 @@ public class SpreadSheetUtility {
      * @param ch  a char
      * @return  the priority of the operator
      */
-    int operatorPriority (char ch) {
+    static int operatorPriority(char ch) {
         if (!isOperator(ch)) {
             // This case should NEVER happen
             System.out.println("Error in operatorPriority.");
             System.exit(0);
         }
         switch (ch) {
-            case Plus:
+            case OperatorToken.Plus:
                 return 0;
-            case Minus:
+            case OperatorToken.Minus:
                 return 0;
-            case Mult:
+            case OperatorToken.Mult:
                 return 1;
-            case Div:
+            case OperatorToken.Div:
                 return 1;
-            case LeftParen:
+            case OperatorToken.LeftParen:
                 return 2;
             default:
                 // This case should NEVER happen
@@ -61,36 +66,9 @@ public class SpreadSheetUtility {
                 System.exit(0);
                 break;
         }
+        return 0;
     }
-    /*
-     * Return the priority of this OperatorToken.
-     *
-     * priorities:
-     *   +, - : 0
-     *   *, / : 1
-     *   (    : 2
-     *
-     * @return  the priority of operatorToken
-     */
-    int priority () {
-        switch (this.operatorToken) {
-            case Plus:
-                return 0;
-            case Minus:
-                return 0;
-            case Mult:
-                return 1;
-            case Div:
-                return 1;
-            case LeftParen:
-                return 2;
-            default:
-                // This case should NEVER happen
-                System.out.println("Error in priority.");
-                System.exit(0);
-                break;
-        }
-    }
+
     /**
      * getCellToken
      *
@@ -116,7 +94,7 @@ public class SpreadSheetUtility {
      * @return  index corresponding to the position in the string just after the cell
     reference
      */
-    int getCellToken (String inputString, int startIndex, CellToken cellToken) {
+    static int getCellToken(String inputString, int startIndex, CellToken cellToken) {
         char ch;
         int column = 0;
         int row = 0;
@@ -135,7 +113,7 @@ public class SpreadSheetUtility {
             }
             index++;
         }
-        if (index == inputString.length) {
+        if (index == inputString.length()) {
             // reached the end of the string before finding a capital letter
             cellToken.setColumn(BadCell);
             cellToken.setRow(BadCell);
@@ -198,7 +176,7 @@ public class SpreadSheetUtility {
      *  @param cellToken  a CellToken
      *  @return  the cellToken's coordinates
      */
-    String printCellToken (CellToken cellToken) {
+    public static String printCellToken (CellToken cellToken) {
         char ch;
         String returnString = "";
         int col;
@@ -215,14 +193,14 @@ public class SpreadSheetUtility {
         number_of_digits--;
         // append the column label, one character at a time
         while (number_of_digits > 1) {
-            ch = (char) ((col / largest) - 1) + 'A';
+            ch = (char) (((col / largest) - 1) + 'A');
             returnString += ch;
             col = col % largest;
             largest = largest  / 26;
             number_of_digits--;
         }
         // handle last digit
-        ch = col + 'A';
+        ch = (char) (col + 'A');
         returnString += ch;
         // append the row as an integer
         returnString += cellToken.getRow();
@@ -248,10 +226,9 @@ public class SpreadSheetUtility {
      *
      * This algorithm follows the algorithm described in Weiss, pages 105-108.
      */
-    Stack getFormula(String formula) {
-        Stack returnStack = new Stack();  // stack of Tokens (representing a postfix
-        expression)
-        bool error = false;
+    public static Stack getFormula(String formula) {
+        Stack returnStack = new Stack();  // stack of Tokens (representing a postfix expression)
+        boolean error = false;
         char ch = ' ';
         int literalValue = 0;
         CellToken cellToken;
@@ -286,7 +263,7 @@ public class SpreadSheetUtility {
                         // lower priority than the current one.
                         OperatorToken stackOperator;
                         while (!operatorStack.isEmpty()) {
-                            stackOperator = (OperatorToken) operatorStack.top();
+                            stackOperator = (OperatorToken) operatorStack.peek();
                             if ( (stackOperator.priority() >= operatorPriority(ch)) &&
                                     (stackOperator.getOperatorToken() !=
                                             OperatorToken.LeftParen) ) {
@@ -309,20 +286,20 @@ public class SpreadSheetUtility {
                 index++;
             } else if (ch == ')') {    // maybe define OperatorToken.RightParen ?
                 OperatorToken stackOperator;
-                stackOperator = (OperatorToken) operatorStack.topAndPop();
+                stackOperator = (OperatorToken) operatorStack.pop();
                 // This code does not handle operatorStack underflow.
                 while (stackOperator.getOperatorToken() != OperatorToken.LeftParen) {
                     // pop operators off the stack until a LeftParen appears and
                     // place the operators on the output stack
                     returnStack.push(stackOperator);
-                    stackOperator = (OperatorToken) operatorStack.topAndPop();
+                    stackOperator = (OperatorToken) operatorStack.pop();
                 }
                 index++;
             } else if (Character.isDigit(ch)) {
                 // We found a literal token
                 literalValue = ch - '0';
                 index++;
-                while (index < formula.length) {
+                while (index < formula.length()) {
                     ch = formula.charAt(index);
                     if (Character.isDigit(ch)) {
                         literalValue = (literalValue * 10) + (ch - '0');
@@ -335,7 +312,8 @@ public class SpreadSheetUtility {
                 returnStack.push(new LiteralToken(literalValue));
             } else if (Character.isUpperCase(ch)) {
                 // We found a cell reference token
-                CellToken cellToken = new CellToken();
+                //CellToken cellToken = new CellToken();
+                cellToken = new CellToken();
                 index = getCellToken(formula, index, cellToken);
                 if (cellToken.getRow() == BadCell) {
                     error = true;
@@ -351,12 +329,19 @@ public class SpreadSheetUtility {
         }
         // pop all remaining operators off the operator stack
         while (!operatorStack.isEmpty()) {
-            returnStack.push(operatorStack.topAndPop());
+            returnStack.push(operatorStack.pop());
         }
         if (error) {
             // a parse error; return the empty stack
-            returnStack.makeEmpty();
+            returnStack.removeAllElements();
         }
         return returnStack;
+    }
+
+    static boolean isOperator(char ch) {
+        if (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '(') {
+            return true;
+        }
+        return false;
     }
 }

@@ -5,10 +5,7 @@ package model.Spreadsheet.src.controller;/*
  * @author Donald Chinn
  */
 
-import model.Spreadsheet.src.model.CellToken;
-import model.Spreadsheet.src.model.LiteralToken;
-import model.Spreadsheet.src.model.OperatorToken;
-import model.Spreadsheet.src.model.Token;
+import model.Spreadsheet.src.model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -103,7 +100,7 @@ public class SpreadsheetApp {
 
         System.out.println("Enter the cell's new formula: ");
         inputFormula = readString();
-        expTreeTokenStack = getFormula(inputFormula);
+        expTreeTokenStack = SpreadSheetUtility.getFormula(inputFormula);
 
         /*
         // This code prints out the expression stack from
@@ -342,5 +339,4 @@ public class SpreadsheetApp {
 
         System.out.println("Thank you for using our spreadsheet.");
     }
-
 }

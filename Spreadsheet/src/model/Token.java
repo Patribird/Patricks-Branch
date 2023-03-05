@@ -18,7 +18,7 @@ public abstract class Token {
         if (expTreeToken instanceof OperatorToken) {
             returnString = ((OperatorToken) expTreeToken).getOperatorToken() + " ";
         } else if (expTreeToken instanceof CellToken) {
-            returnString = printCellToken((CellToken) expTreeToken) + " ";
+            returnString = SpreadSheetUtility.printCellToken((CellToken) expTreeToken) + " ";
         } else if (expTreeToken instanceof LiteralToken) {
             returnString = ((LiteralToken) expTreeToken).getValue() + " ";
         } else {

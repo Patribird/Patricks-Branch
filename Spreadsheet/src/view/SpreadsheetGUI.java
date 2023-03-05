@@ -6,7 +6,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
-
+    private static final Toolkit KIT = Toolkit.getDefaultToolkit();
     /**
      * The users screen size.
      */
