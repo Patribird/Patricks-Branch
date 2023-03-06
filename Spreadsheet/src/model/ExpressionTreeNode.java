@@ -1,5 +1,7 @@
 package model.Spreadsheet.src.model;
 
+import java.util.Stack;
+
 import static model.Spreadsheet.src.model.OperatorToken.*;
 
 /**
@@ -16,6 +18,16 @@ public class ExpressionTreeNode {
 	public ExpressionTreeNode myRight;
 
 	private Token myToken;
+
+	public ExpressionTreeNode(Token theToken, ExpressionTreeNode theLeftHS, ExpressionTreeNode theRightHS) {
+		myToken = theToken;
+		myLeft = theLeftHS;
+		myRight = theRightHS;
+	}
+
+	public void setMyRoot(ExpressionTreeNode theRoot) {
+		myRoot = theRoot;
+	}
 
 	public Token getToken() {
 		return myToken;
@@ -37,5 +49,39 @@ public class ExpressionTreeNode {
 				(ch == Mult) ||
 				(ch == Div) ||
 				(ch == LeftParen) );
+	}
+
+	// Build an expression tree from a stack of ExpressionTreeTokens
+	void BuildExpressionTree (Stack<Token> s) {
+		myRoot = GetExpressionTree(s);
+		if (!s.isEmpty()) {
+			System.out.println("Error in BuildExpressionTree.");
+		}
+	}
+
+	ExpressionTreeNode GetExpressionTree(Stack<Token> s) {
+		ExpressionTreeNode returnTree;
+		Token token;
+
+		if (s.isEmpty())
+			return null;
+
+		token = (Token) s.pop();  // need to handle stack underflow
+		if ((token instanceof LiteralToken) ||
+				(token instanceof CellToken) ) {
+
+			// Literals and Cells are leaves in the expression tree
+			returnTree = new ExpressionTreeNode(token, null, null);
+			return returnTree;
+		} else if (token instanceof OperatorToken) {
+			// Continue finding tokens that will form the
+			// right subtree and left subtree.
+			ExpressionTreeNode rightSubtree = GetExpressionTree (s);
+			ExpressionTreeNode leftSubtree  = GetExpressionTree (s);
+			returnTree =
+					new ExpressionTreeNode(token, leftSubtree, rightSubtree);
+			return returnTree;
+		}
+		return null;
 	}
 }

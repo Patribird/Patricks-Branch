@@ -6,9 +6,9 @@ package model.Spreadsheet.src.model;
  * @author Nathameion Montgomery
  */
 public abstract class Token {
-    public Token myToken;
+    public String myToken;
 
-    public Token getToken() {
+    public String getToken() {
         return myToken;
     }
 
@@ -26,5 +26,10 @@ public abstract class Token {
             System.exit(0);
         }
         return returnString;
+    }
+
+    @Override
+    public String toString() {
+        return myToken;
     }
 }
