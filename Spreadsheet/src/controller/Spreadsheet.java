@@ -27,7 +27,7 @@ public class Spreadsheet {
                     System.out.print("\t0\t");
                 }
                 else {
-                    System.out.print(mySpreadsheet[rows][cols].getValue());
+                    System.out.print("\t" + mySpreadsheet[rows][cols].getValue() + "\t");
                 }
             }
             System.out.println();
@@ -78,6 +78,15 @@ public class Spreadsheet {
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell();
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormula(expTreeTokenStack);
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormulaInOrder(inOrder);
+        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].evaluate(this);
+    }
+
+
+    public void changeCellFormulaAndRecalculate(CellToken cellToken, String expTreeTokenString, String inOrder) {
+        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell();
+        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormula(expTreeTokenString);
+        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormulaInOrder(inOrder);
+        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].evaluate(this);
     }
 
     /**

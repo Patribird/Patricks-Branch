@@ -29,6 +29,7 @@ public class Cell {
 			newFormula.append(expressionTreeTokens.pop().toString());
 		}
 		myFormula = newFormula.toString();
+		System.out.println("My Formula : " + myFormula);
 	}
 
 	public void setFormulaInOrder(final String theFormula) {
@@ -36,12 +37,13 @@ public class Cell {
 	}
 
 	public void evaluate(Spreadsheet theSpreadsheet) {
-		int result = 0;
-
-
-
-
-		myValue = result;
+		Stack expTreeTokenStack = SpreadSheetUtility.getFormula(myFormula);
+		ExpressionTreeNode root = ExpressionTreeNode.GetExpressionTree(expTreeTokenStack);
+		System.out.println("Test eval in cell");
+		ExpressionTree.printTree(root);
+		System.out.println("Test eval in cell end");
+		myValue = ExpressionTree.evaluate(root, theSpreadsheet);
+		System.out.println(myValue);
 	}
 
 	public String getFormula() {
