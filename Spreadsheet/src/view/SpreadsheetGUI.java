@@ -5,6 +5,12 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * SpreadsheetGUI contains the GUI components for the Spreadsheet
+ * and displays the GUI to the user.
+ * @author Patrick Hern
+ * @author Nathameion Montgomery
+ */
 public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
     private static final Toolkit KIT = Toolkit.getDefaultToolkit();
     /**
@@ -12,9 +18,9 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
      */
     private static final Dimension SCREEN_SIZE = KIT.getScreenSize();
 
-    private static final int ROWS = 52;
+    private static final int ROWS = 26;
 
-    private static final int COLUMNS = 52;
+    private static final int COLUMNS = 26;
     private static final LayoutManager LAYOUT = new GridLayout(ROWS, COLUMNS);
 
     private static CellGUI[][] myCells = new CellGUI[ROWS][COLUMNS];
@@ -44,7 +50,7 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         setUpCells();
         add(cellPanel);
         pack();
-        setSize(new Dimension(SCREEN_SIZE));
+        setSize(new Dimension(1000, 500));
     }
 
     private void setUpCells() {

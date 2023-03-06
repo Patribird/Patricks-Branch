@@ -1,5 +1,13 @@
 package model.Spreadsheet.src.model;
 
+/**
+ * CellToken are for the cell tokens with a row and column.
+ * An example is row: A
+ *               col: 2
+ *               Or:  A2
+ * @author Patrick Hern
+ * @author Nathameion Montgomery
+ */
 public class CellToken extends Token {
     private int myColumn;   // column A = 0, B = 1, ...
     private int myRow;

@@ -5,6 +5,13 @@ import model.Spreadsheet.src.model.CellToken;
 
 import java.util.Stack;
 
+/**
+ * The Spreadsheet class contains all relevant information to the
+ * actual spreadsheet itself. Includes the spreadsheet of cells,
+ * getters, and print methods.
+ * @author Patrick Hern
+ * @author Nathameion Montgomery
+ */
 public class Spreadsheet {
     private final Cell[][] mySpreadsheet;
     private final int BadCell = -1;
@@ -40,15 +47,16 @@ public class Spreadsheet {
     }
 
     public void printAllFormulas() {
+        System.out.print("  ");
         for (int i = 0; i < getNumRows(); i++) {
             System.out.print("\t" + ((char) (i % 26 + 'A')) + "\t");
         }
         System.out.println();
         for (int rows = 0; rows < getNumRows(); rows++) {
-            System.out.print(rows);
+            System.out.print(rows + "| ");
             for (int cols = 0; cols < getNumColumns(); cols++) {
                 if (mySpreadsheet[rows][cols] == null) {
-                    System.out.print("\t0\t|");
+                    System.out.print("\t \t|");
                 }
                 else {
                     System.out.print("\t" + mySpreadsheet[rows][cols].getFormula() + "\t|");

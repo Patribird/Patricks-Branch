@@ -3,13 +3,15 @@ package model.Spreadsheet.src.model;
 import java.util.Collection;
 import java.util.Stack;
 
+/**
+ * Utility functions for SpreadsheetApp.java.
+ *
+ * @author Donald Chinn
+ * @author Nathameion Montgomery
+ * @author Patrick Hern
+ */
 public class SpreadSheetUtility {
-    /*
-     * Utility functions.
-     * You should place these methods in the appropriate classes.
-     * @author Donald Chinn
-     * @author Nathameion Montgomery
-     */
+
     private final static int BadCell = -1;
     /**
      * Return a string associated with a token

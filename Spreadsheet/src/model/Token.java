@@ -4,7 +4,6 @@ package model.Spreadsheet.src.model;
  * Abstract class for the Tokens included in each cell.
  * @author Patrick Hern
  * @author Nathameion Montgomery
- * @version March 2nd, 2023
  */
 public abstract class Token {
     public Token myToken;

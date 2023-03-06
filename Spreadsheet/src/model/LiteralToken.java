@@ -1,5 +1,10 @@
 package model.Spreadsheet.src.model;
 
+/**
+ * LiteralToken is a type of token that holds a literal value/integer.
+ * @author Patrick Hern
+ * @author Nathameion Montgomery
+ */
 public class LiteralToken extends Token {
     private int myLiteral;
 

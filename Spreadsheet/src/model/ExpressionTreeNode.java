@@ -2,11 +2,18 @@ package model.Spreadsheet.src.model;
 
 import static model.Spreadsheet.src.model.OperatorToken.*;
 
+/**
+ * ExpressionTreeNode holds the root as well as the left and
+ * right children of the root. It also includes the tokens
+ * in each Node.
+ * @author Patrick Hern
+ * @author Nathameion Montgomery
+ */
 public class ExpressionTreeNode {
+	public ExpressionTreeNode myRoot;
+	public ExpressionTreeNode myLeft;
 
-	public ExpressionTreeNode left;
-
-	public ExpressionTreeNode right;
+	public ExpressionTreeNode myRight;
 
 	private Token myToken;
 

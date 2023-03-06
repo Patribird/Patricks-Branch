@@ -1,7 +1,16 @@
 package model.Spreadsheet.src.model;
 
+import model.Spreadsheet.src.controller.Spreadsheet;
+
 import java.util.Stack;
 
+/**
+ * Cell contains all relevant information pertaining to a cell
+ * including its formula as well as its value. Also has some
+ * setters and an expression tree.
+ * @author Patrick Hern
+ * @author Nathameion Montgomery
+ */
 public class Cell {
 	private String myFormula;
 
@@ -21,8 +30,8 @@ public class Cell {
 		myFormula = newFormula.toString();
 	}
 
-	public int evaluate() {
-		return 0;
+	public void evaluate(Spreadsheet theSpreadsheet) {
+
 	}
 
 	public String getFormula() {

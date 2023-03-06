@@ -1,5 +1,12 @@
 package model.Spreadsheet.src.model;
 
+/**
+ * OperatorToken is a type of Token that stores a char of the
+ * basic operations that can be performed. Also includes
+ * their priority (order of operations).
+ * @author Patrick Hern
+ * @author Nathameion Montgomery
+ */
 public class OperatorToken extends Token {
     public static final char Plus = '+';
     public static final char Minus = '-';
