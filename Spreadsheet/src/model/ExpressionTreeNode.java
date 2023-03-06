@@ -59,7 +59,7 @@ public class ExpressionTreeNode {
 		}
 	}
 
-	ExpressionTreeNode GetExpressionTree(Stack<Token> s) {
+	public static ExpressionTreeNode GetExpressionTree(Stack<Token> s) {
 		ExpressionTreeNode returnTree;
 		Token token;
 

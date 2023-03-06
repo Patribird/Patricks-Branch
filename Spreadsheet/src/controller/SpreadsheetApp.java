@@ -86,7 +86,9 @@ public class SpreadsheetApp {
         String inputFormula;
         CellToken cellToken = new CellToken();
         Stack expTreeTokenStack;
-        ExpressionTreeToken expTreeToken;
+//        ExpressionTreeToken expTreeToken;
+        Token expTreeToken;
+
 
         System.out.println("Enter the cell to change: ");
         inputCell = readString();
@@ -108,19 +110,28 @@ public class SpreadsheetApp {
         expTreeTokenStack = SpreadSheetUtility.getFormula(inputFormula);
 
 
-        // This code prints out the expression stack from
-        // top to bottom (that is, reverse of postfix).
-        while (!expTreeTokenStack.isEmpty()) {
-            expTreeToken = expTreeTokenStack.pop();
-            printExpressionTreeToken(expTreeToken);
-        }
+
+        ExpressionTreeNode root = ExpressionTreeNode.GetExpressionTree(expTreeTokenStack);
+        ExpressionTree.printTree(root);
+        System.out.println(ExpressionTree.evaluate(root));
+//        String postFix = ""; // Temp Code
+//        // This code prints out the expression stack from
+//        // top to bottom (that is, reverse of postfix).
+//        while (!expTreeTokenStack.isEmpty()) {
+//            expTreeToken = (Token) expTreeTokenStack.pop();
+//            printExpressionTreeToken(expTreeToken);
+//
+//            postFix += expTreeToken + " ";
+//        }
+//        System.out.println(postFix);
+
 
 
         theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, expTreeTokenStack, inputFormula);
         System.out.println();
     }
 
-    private static void printExpressionTreeToken(ExpressionTreeToken theExpTreeToken) {
+    private static void printExpressionTreeToken(Token theExpTreeToken) {
         System.out.println(theExpTreeToken);
     }
 

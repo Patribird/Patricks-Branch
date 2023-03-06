@@ -12,9 +12,12 @@ public class CellToken extends Token {
     private int myColumn;   // column A = 0, B = 1, ...
     private int myRow;
 
+    private int myValue; // The value this token has
+
     public CellToken() {
         myColumn = 0;
         myRow = 0;
+        myValue = 0; // Initialize all tokens with formula 0 meaning val must be 0
     }
 
     public int getRow() {
@@ -25,12 +28,20 @@ public class CellToken extends Token {
         return myColumn;
     }
 
+    public int getValue() {
+        return myValue;
+    }
+
     public void setRow(final int theNewRow) {
         myRow = theNewRow;
     }
 
     public void setColumn(final int theNewColumn) {
         myColumn = theNewColumn;
+    }
+
+    public void setValue(int theNewValue) {
+        myValue = theNewValue;
     }
 
     @Override
