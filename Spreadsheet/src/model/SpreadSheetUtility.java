@@ -340,7 +340,7 @@ public class SpreadSheetUtility {
         return returnStack;
     }
 
-    static boolean isOperator(char ch) {
+    public static boolean isOperator(char ch) {
         if (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '(') {
             return true;
         }

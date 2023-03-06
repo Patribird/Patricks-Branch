@@ -17,6 +17,7 @@ public class Cell {
 	private Integer myValue;
 
 	private ExpressionTree myExpressionTree;
+	private String myInOrderFormula;
 
 	public void setFormula (final String theFormula) {
 		myFormula = theFormula;
@@ -30,11 +31,28 @@ public class Cell {
 		myFormula = newFormula.toString();
 	}
 
-	public void evaluate(Spreadsheet theSpreadsheet) {
+	public void setFormulaInOrder(final String theFormula) {
+		myInOrderFormula = theFormula;
+	}
 
+	public void evaluate(Spreadsheet theSpreadsheet) {
+		int result = 0;
+
+
+
+
+		myValue = result;
 	}
 
 	public String getFormula() {
 		return myFormula;
+	}
+
+	public String getInOrderFormula() {
+		return myInOrderFormula;
+	}
+
+	public Integer getValue() {
+		return myValue;
 	}
 }

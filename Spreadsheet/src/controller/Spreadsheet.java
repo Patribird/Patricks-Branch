@@ -27,7 +27,7 @@ public class Spreadsheet {
                     System.out.print("\t0\t");
                 }
                 else {
-                    System.out.print("\t" + mySpreadsheet[rows][cols].getFormula() + "\t");
+                    System.out.print(mySpreadsheet[rows][cols].getValue());
                 }
             }
             System.out.println();
@@ -46,29 +46,38 @@ public class Spreadsheet {
         System.out.println(cell.getFormula());
     }
 
+    public String getCellFormula(Cell theCell) {
+        return theCell.getFormula();
+    }
+
+    public Cell[][] getMySpreadsheet() {
+        return mySpreadsheet;
+    }
+
     public void printAllFormulas() {
-        System.out.print("  ");
+        System.out.print("\t");
         for (int i = 0; i < getNumRows(); i++) {
-            System.out.print("\t" + ((char) (i % 26 + 'A')) + "\t");
+            System.out.print("\t\t" + ((char) (i % 26 + 'A')) + "\t\t");
         }
         System.out.println();
         for (int rows = 0; rows < getNumRows(); rows++) {
-            System.out.print(rows + "| ");
+            System.out.print(rows + " ");
             for (int cols = 0; cols < getNumColumns(); cols++) {
                 if (mySpreadsheet[rows][cols] == null) {
-                    System.out.print("\t \t|");
+                    System.out.print("\t\t \t\t");
                 }
                 else {
-                    System.out.print("\t" + mySpreadsheet[rows][cols].getFormula() + "\t|");
+                    System.out.printf("\t\t" + mySpreadsheet[rows][cols].getInOrderFormula() + "\t\t");
                 }
             }
             System.out.println();
         }
     }
 
-    public void changeCellFormulaAndRecalculate(CellToken cellToken, Stack expTreeTokenStack) {
+    public void changeCellFormulaAndRecalculate(CellToken cellToken, Stack expTreeTokenStack, String inOrder) {
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell();
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormula(expTreeTokenStack);
+        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormulaInOrder(inOrder);
     }
 
     /**

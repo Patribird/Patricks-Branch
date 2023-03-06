@@ -117,7 +117,7 @@ public class SpreadsheetApp {
         }
         */
 
-        theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, expTreeTokenStack);
+        theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, expTreeTokenStack, inputFormula);
         System.out.println();
     }
 

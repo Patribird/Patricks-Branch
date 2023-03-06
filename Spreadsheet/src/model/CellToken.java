@@ -44,7 +44,7 @@ public class CellToken extends Token {
         StringBuilder result = new StringBuilder();
         int currentRow = myRow;
         while (currentRow > 0) {
-            int letterNumber = (currentRow % 26 - 2) + 'A';
+            int letterNumber = (myColumn % 26) + 'A';
             result.append((char) letterNumber);
             currentRow = currentRow / 26;
         }
