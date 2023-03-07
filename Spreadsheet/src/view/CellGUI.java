@@ -17,6 +17,7 @@ public class CellGUI extends JPanel {
         myRow = theRow;
         myCol = theCol;
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        setSize(new Dimension(60, 20));
         setVisible(true);
     }
 }
