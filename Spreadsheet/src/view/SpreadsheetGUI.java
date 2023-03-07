@@ -20,7 +20,9 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     private static final Dimension PROGRAM_DEFAULT_SIZE = new Dimension(SCREEN_SIZE.width * 9 / 10, SCREEN_SIZE.height * 9 / 10);
 
-    private static final int ROWS = 27; // The top row is for labels
+    private static final Dimension CELL_PANEL_SIZE = new Dimension(PROGRAM_DEFAULT_SIZE.width * 6, PROGRAM_DEFAULT_SIZE.height * 2);
+
+    private static final int ROWS = 57; // The top row is for labels
 
     private static final int COLUMNS = 57; // The left column is for labels
     private static final LayoutManager CELL_LAYOUT = new GridLayout(ROWS, COLUMNS);
@@ -49,26 +51,19 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     private void setupGUI() {
         setTitle("Spreadsheet");
-        mainPanel.setLayout(new BorderLayout());
-        add(mainPanel);
-        //setLayout(new BoxLayout(scrollPane));
-        //add(cellPanel);
         scrollPane = new JScrollPane(cellPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setSize(new Dimension(PROGRAM_DEFAULT_SIZE.width * 9 / 10, PROGRAM_DEFAULT_SIZE.height * 9 / 10));
         add(scrollPane, BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //setResizable(false);
         setVisible(true);
-        setSize(new Dimension(PROGRAM_DEFAULT_SIZE));
         setUpCells();
         setSize(PROGRAM_DEFAULT_SIZE);
         setLocationRelativeTo(null);
-        //pack();
     }
 
     private void setUpCells() {
         cellPanel.setLayout(CELL_LAYOUT);
-        cellPanel.setPreferredSize(PROGRAM_DEFAULT_SIZE);
+        cellPanel.setPreferredSize(CELL_PANEL_SIZE);
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
                 if (row == 0 && col == 0) {
@@ -84,7 +79,6 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
                 }
             }
         }
-        //cellPanel.setSize(SCREEN_SIZE);
         cellPanel.revalidate();
         cellPanel.setVisible(true);
     }
