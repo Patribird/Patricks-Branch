@@ -11,15 +11,26 @@ import java.util.Stack;
  * getters, and print methods.
  * @author Patrick Hern
  * @author Nathameion Montgomery
+ * @author Tim Ratsko
  */
 public class Spreadsheet {
+    /** A 2-Dimensional array that represents a spreadsheet. */
     private final Cell[][] mySpreadsheet;
+    /** A "bad cell" will return -1 if an operation goes wrong. */
     private final int BadCell = -1;
 
+    /**
+     * The constructor for the spreadsheet that initializes the
+     * spreadsheet with the proper dimensions.
+     * @param theRowAndCols The size of the square spreadsheet.
+     */
     public Spreadsheet(final int theRowAndCols) {
         mySpreadsheet = new Cell[theRowAndCols][theRowAndCols];
     }
 
+    /**
+     * Prints out all the values stored in the spreadsheet.
+     */
     public void printValues() {
         for (int rows = 0; rows < getNumRows(); rows++) {
             for (int cols = 0; cols < getNumColumns(); cols++) {
@@ -34,28 +45,46 @@ public class Spreadsheet {
         }
     }
 
+    /**
+     * Getter for the number of rows in the spreadsheet.
+     * @return Returns the number of rows.
+     */
     public int getNumRows() {
         return mySpreadsheet.length;
     }
 
+    /**
+     * Getter for the number of columns in the spreadsheet.
+     * @return Returns the number of columns.
+     */
     public int getNumColumns() {
         return mySpreadsheet[0].length;
     }
 
+    /**
+     * Prints out the cell formula and calls getFormula from to get
+     * the String of the formula.
+     * @param cell The cell whose formula we wish to print
+     */
     public void printCellFormula(Cell cell) {
-        System.out.println(cell.getFormula());
+//        System.out.println(cell.getFormula());
+        System.out.println(cell.getInOrderFormula());
     }
 
-    public String getCellFormula(Cell theCell) {
-        return theCell.getFormula();
-    }
-
+    /**
+     * Returns the spreadsheet ot the calling program.
+     * @return Returns the spreadsheet of Cells to the user.
+     */
     public Cell[][] getMySpreadsheet() {
         return mySpreadsheet;
     }
 
+    /**
+     * Prints all the formulas in the spreadsheet out to the console
+     * with row and column labels.
+     */
     public void printAllFormulas() {
-        System.out.print("\t");
+        System.out.print("\t\t");
         for (int i = 0; i < getNumRows(); i++) {
             System.out.print("\t\t" + ((char) (i % 26 + 'A')) + "\t\t");
         }
@@ -74,6 +103,14 @@ public class Spreadsheet {
         }
     }
 
+    /**
+     * Changes the cells formula and recalculates the expression.
+     * @param cellToken The CellToken passed where a new cell will
+     *                  be declared and set.
+     * @param expTreeTokenStack The expressionTreeStack String for
+     *                           setting the formula.
+     * @param inOrder The current order of the
+     */
     public void changeCellFormulaAndRecalculate(CellToken cellToken, Stack expTreeTokenStack, String inOrder) {
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell();
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormula(expTreeTokenStack);
@@ -81,7 +118,14 @@ public class Spreadsheet {
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].evaluate(this);
     }
 
-
+    /**
+     * Changes the cells formula and recalculates the expression.
+     * @param cellToken The CellToken passed where a new cell will
+     *                  be declared and set.
+     * @param expTreeTokenString The expressionTreeToken String for
+     *                           setting the fromula
+     * @param inOrder The current order of the
+     */
     public void changeCellFormulaAndRecalculate(CellToken cellToken, String expTreeTokenString, String inOrder) {
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell();
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormula(expTreeTokenString);
@@ -228,6 +272,12 @@ public class Spreadsheet {
         return returnString;
     }
 
+    /**
+     * Gets the cell and returns it.
+     * @param row The row of the cell.
+     * @param col The column of the cell.
+     * @return Returns a cell found from the spreadsheet.
+     */
     public Cell getCell(final int row, final int col) {
         try {
             return mySpreadsheet[row][col];

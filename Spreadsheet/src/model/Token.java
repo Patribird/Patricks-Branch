@@ -6,12 +6,20 @@ package model.Spreadsheet.src.model;
  * @author Nathameion Montgomery
  */
 public abstract class Token {
+    /** The String that represents the token. */
     public String myToken;
-
+    /** A public method that returns the token to the user. */
     public String getToken() {
         return myToken;
     }
 
+    /**
+     * The printExpressionTreeToken method prints out a token from
+     * the expression tree. It'll either be a cell, literal,
+     * or operator.
+     * @param expTreeToken The expression token to be printed.
+     * @return Returns a String of the token.
+     */
     String printExpressionTreeToken (Token expTreeToken) {
         String returnString = "";
         if (expTreeToken instanceof OperatorToken) {

@@ -340,6 +340,12 @@ public class SpreadSheetUtility {
         return returnStack;
     }
 
+    /**
+     * isOperator returns a true if the char passed in is one of the
+     * supported operations.
+     * @param ch The character to be checked.
+     * @return Returns if the char is an operator.
+     */
     public static boolean isOperator(char ch) {
         if (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '(') {
             return true;

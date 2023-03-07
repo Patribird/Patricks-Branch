@@ -8,14 +8,21 @@ import model.Spreadsheet.src.controller.Spreadsheet;
  * tree itself.
  * @author Patrick Hern
  * @author Nathameion Montgomery
+ * @author Tim Ratsko
  */
 public class ExpressionTree {
+	/** Boolean for if the ExpressionTree contains the root. */
 	private boolean myContainsRoot;
-
+	/** Method to make the expression tree empty. */
 	public void makeEmpty() {
 
 	}
 
+	/**
+	 * Recursive method to print out the tree nodes in pre, in,
+	 * and post fixes. Though pre and in are commented out.
+	 * @param expTreeNode The expression tree node to print.
+	 */
 	public static void printTree(ExpressionTreeNode expTreeNode) {
 		//System.out.println(expTreeNode.getToken()); // Pre-fix
 		if (expTreeNode.myLeft != null)
@@ -26,6 +33,12 @@ public class ExpressionTree {
 		System.out.println(expTreeNode.getToken()); // Post-fix
 	}
 
+	/**
+	 * Generates a string of the ExpressionTree. Also, recursive and
+	 * in post-fix order.
+	 * @param expTreeNode The expression tree node to print.
+	 * @return Returns a String of the ExpressionTree.
+	 */
 	public static String stringTree(ExpressionTreeNode expTreeNode) {
 		String out = "";
 		if (expTreeNode.myLeft != null)
@@ -35,11 +48,13 @@ public class ExpressionTree {
 		return out +=expTreeNode.getToken().toString(); // Post-fix
 	}
 
-	@Override
-	public String toString() {
-		return "";
-	}
-
+	/**
+	 * Evaluate parses the ExpressionTree and evaluates all expression.
+	 * It checks for the different types of tokens and then
+	 * @param expTreeNode The expression tree node and Token to parse.
+	 * @param s The spreadsheet that contains the needed cells.
+	 * @return Returns the integer the ExpressionTree evaluates to.
+	 */
 	public static int evaluate(ExpressionTreeNode expTreeNode, Spreadsheet s) {
 		// Literals and Cell tokens are leaves so just return whatever value is associated with them
 		// But Operators will have both a left and right child, so we need to evaluate those as well.
@@ -74,9 +89,5 @@ public class ExpressionTree {
 		}
 
 		return -1; // Code should never get here
-	}
-
-	public int evaluate(final Spreadsheet theSpreadsheet) {
-		return 0;
 	}
 }

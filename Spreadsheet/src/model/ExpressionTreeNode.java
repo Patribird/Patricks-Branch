@@ -12,27 +12,48 @@ import static model.Spreadsheet.src.model.OperatorToken.*;
  * @author Nathameion Montgomery
  */
 public class ExpressionTreeNode {
+	/** The root of the expression tree. */
 	public ExpressionTreeNode myRoot;
+	/** The left node of the root. */
 	public ExpressionTreeNode myLeft;
-
+	/** The right node of the root. */
 	public ExpressionTreeNode myRight;
-
+	/** The token stored inside the expression tree node. */
 	private Token myToken;
 
+	/**
+	 * Expression tree node constructor that takes in the
+	 * token, left subtree, and the right subtree.
+	 * @param theToken The token/value stored in the node.
+	 * @param theLeftHS The left child of the root.
+	 * @param theRightHS The right child of the root.
+	 */
 	public ExpressionTreeNode(Token theToken, ExpressionTreeNode theLeftHS, ExpressionTreeNode theRightHS) {
 		myToken = theToken;
 		myLeft = theLeftHS;
 		myRight = theRightHS;
 	}
 
+	/**
+	 * Sets the root of the expression tree node.
+	 * @param theRoot The new root of the expression tree.
+	 */
 	public void setMyRoot(ExpressionTreeNode theRoot) {
 		myRoot = theRoot;
 	}
 
+	/**
+	 * Getter that returns the token to the user.
+	 * @return Returns the Token to the user.
+	 */
 	public Token getToken() {
 		return myToken;
 	}
 
+	/**
+	 * Setter method for the Token.
+	 * @param theToken The Token to be set to.
+	 */
 	public void setToken(final Token theToken) {
 		myToken = theToken;
 	}
@@ -59,14 +80,20 @@ public class ExpressionTreeNode {
 		}
 	}
 
-	public static ExpressionTreeNode GetExpressionTree(Stack<Token> s) {
+	/**
+	 * Takes in a stack and pops them off and into an expression
+	 * tree. Then the root node of the expression tree is returned.
+	 * @param theStack The stack of Tokens representing the cells.
+	 * @return Returns the root of the ExpressionTree.
+	 */
+	public static ExpressionTreeNode GetExpressionTree(Stack<Token> theStack) {
 		ExpressionTreeNode returnTree;
 		Token token;
 
-		if (s.isEmpty())
+		if (theStack.isEmpty())
 			return null;
 
-		token = (Token) s.pop();  // need to handle stack underflow
+		token = (Token) theStack.pop();  // need to handle stack underflow
 		if ((token instanceof LiteralToken) ||
 				(token instanceof CellToken) ) {
 
@@ -76,8 +103,8 @@ public class ExpressionTreeNode {
 		} else if (token instanceof OperatorToken) {
 			// Continue finding tokens that will form the
 			// right subtree and left subtree.
-			ExpressionTreeNode rightSubtree = GetExpressionTree (s);
-			ExpressionTreeNode leftSubtree  = GetExpressionTree (s);
+			ExpressionTreeNode rightSubtree = GetExpressionTree (theStack);
+			ExpressionTreeNode leftSubtree  = GetExpressionTree (theStack);
 			returnTree =
 					new ExpressionTreeNode(token, leftSubtree, rightSubtree);
 			return returnTree;

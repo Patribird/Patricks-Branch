@@ -8,17 +8,31 @@ package model.Spreadsheet.src.model;
  * @author Nathameion Montgomery
  */
 public class OperatorToken extends Token {
+    /** A constant char that represents addition. */
     public static final char Plus = '+';
+    /** A constant char that represents subtraction. */
     public static final char Minus = '-';
+    /** A constant char that represents multiplication. */
     public static final char Mult = '*';
+    /** A constant char that represents division. */
     public static final char Div = '/';
+    /** A constant char that represents precedence with a parenthesis. */
     public static final char LeftParen = '(';
+    /** A constant char that represents the operator. */
     private final char myOperator;
 
+    /**
+     * Basic constructor to set operator tokens value.
+     * @param theOperator The operator token to set myOperator to.
+     */
     public OperatorToken(final char theOperator) {
         myOperator = theOperator;
     }
 
+    /**
+     * Returns the operator token to the user.
+     * @return Returns a char of the operator.
+     */
     public char getOperatorToken() {
         return myOperator;
     }
@@ -54,6 +68,11 @@ public class OperatorToken extends Token {
         }
     }
 
+    /**
+     * Basic toString that returns a String of the operator to the
+     * calling program.
+     * @return Returns a String of the operator.
+     */
     @Override
     public String toString() {
         return Character.toString(myOperator);

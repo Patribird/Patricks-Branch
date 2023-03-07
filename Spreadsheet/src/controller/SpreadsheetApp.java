@@ -16,6 +16,7 @@ import static model.Spreadsheet.src.model.OperatorToken.*;
  * @author Donald Chinn
  * @author Patrick Hern
  * @author Nathameion Montgomery
+ * @author Tim Ratsko
  */
 public class SpreadsheetApp {
 
@@ -44,10 +45,19 @@ public class SpreadsheetApp {
         return returnString;
     }
 
+    /**
+     * Prints the values stored in the cells.
+     * @param theSpreadsheet The spreadsheet with all of it's cells.
+     */
     private static void menuPrintValues(Spreadsheet theSpreadsheet) {
         theSpreadsheet.printValues();
     }
 
+    /**
+     * Prints the cell's formula out to the console as a part of the
+     * print cell menu option.
+     * @param theSpreadsheet
+     */
     private static void menuPrintCellFormula(Spreadsheet theSpreadsheet) {
         CellToken cellToken = new CellToken();
         String inputString;
@@ -75,12 +85,21 @@ public class SpreadsheetApp {
         System.out.println();
     }
 
+    /**
+     * Prints out all the formulas stored in the Spreadsheet.
+     * @param theSpreadsheet The spreadsheet with all Cells and formulas.
+     */
     private static void menuPrintAllFormulas(Spreadsheet theSpreadsheet) {
         theSpreadsheet.printAllFormulas();
         System.out.println();
     }
 
-
+    /**
+     * Prints out to the console a prompt to change a Cell in the spreadsheet.
+     * The String is parsed and then the formula is updated for the
+     * respective cell.
+     * @param theSpreadsheet The spreadsheet where a Cell will be changed.
+     */
     private static void menuChangeCellFormula(Spreadsheet theSpreadsheet) {
         String inputCell;
         String inputFormula;
@@ -113,29 +132,38 @@ public class SpreadsheetApp {
 
         ExpressionTreeNode root = ExpressionTreeNode.GetExpressionTree(expTreeTokenStack);
         // DEBUG CODE
-//        ExpressionTree.printTree(root);
-//        System.out.println(ExpressionTree.stringTree(root));
-//        System.out.println(ExpressionTree.evaluate(root, theSpreadsheet));
-//        String postFix = ""; // Temp Code
-//        // This code prints out the expression stack from
-//        // top to bottom (that is, reverse of postfix).
-//        while (!expTreeTokenStack.isEmpty()) {
-//            expTreeToken = (Token) expTreeTokenStack.pop();
-//            printExpressionTreeToken(expTreeToken);
-//
-//            postFix += expTreeToken + " ";
-//        }
-//        System.out.println(postFix);
+        ExpressionTree.printTree(root);
+        System.out.println(ExpressionTree.stringTree(root));
+        System.out.println(ExpressionTree.evaluate(root, theSpreadsheet));
+        String postFix = ""; // Temp Code
+        // This code prints out the expression stack from
+        // top to bottom (that is, reverse of postfix).
+        while (!expTreeTokenStack.isEmpty()) {
+            expTreeToken = (Token) expTreeTokenStack.pop();
+            printExpressionTreeToken(expTreeToken);
+
+            postFix += expTreeToken + " ";
+        }
+        System.out.println(postFix);
 
 
         theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, ExpressionTree.stringTree(root), inputFormula);
         System.out.println();
     }
 
+    /**
+     * Prints the expression tree's token out to the console.
+     * @param theExpTreeToken The expression tree token to be printed.
+     */
     private static void printExpressionTreeToken(Token theExpTreeToken) {
         System.out.println(theExpTreeToken);
     }
 
+    /**
+     * The main method of the driver program that controls the console
+     * interface.
+     * @param args The arguments passed into main.
+     */
     public static void main(String[] args) {
         Spreadsheet theSpreadsheet = new Spreadsheet(8);
         SpreadsheetGUI theGUI = new SpreadsheetGUI();
