@@ -11,8 +11,6 @@ import java.awt.event.*;
  * @author Nathameion Montgomery
  */
 public class CellGUI extends JPanel {
-    private static final Color HIGHLIGHT_COLOR = new Color(243, 255, 171);
-    private  static final Color DEFAULT_COLOR = Color.white;
     private int myRow;
     private int myCol;
 
@@ -23,11 +21,13 @@ public class CellGUI extends JPanel {
     public CellGUI(final int theRow, final int theCol) {
         myRow = theRow;
         myCol = theCol;
+
         myFormulaField = new JTextField(10);
+        myFormulaField.setHorizontalAlignment(SwingConstants.CENTER);
         myFormulaField.setBorder(BorderFactory.createEmptyBorder());
-        setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        setSize(new Dimension(60, 20));
-        add(myFormulaField);
+        myFormulaField.setForeground(ColorData.getColor(SpreadsheetGUI.theme, "text"));
+        myFormulaField.setToolTipText("Row: " + Integer.toString(theRow) + ", Column: " + getColumnString(theCol + 1));
+
         myFormulaField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -39,12 +39,18 @@ public class CellGUI extends JPanel {
                 setBackgroundToNormal();
             }
         });
+
+        setBorder(BorderFactory.createLineBorder(ColorData.getColor(SpreadsheetGUI.theme, "border")));
+        setLayout(new BorderLayout());
+        setSize(new Dimension(60, 20));
+        add(myFormulaField, BorderLayout.CENTER);
+        setBackgroundToNormal();
         setVisible(true);
     }
 
     public void highlightCell() {
-        setBackground(HIGHLIGHT_COLOR);
-        myFormulaField.setBackground(HIGHLIGHT_COLOR);
+        setBackground(ColorData.getColor(SpreadsheetGUI.theme, "highlight"));
+        myFormulaField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "highlight"));
         //System.out.println(myRow + ", " + myCol);
         myFormulaField.grabFocus();
         //System.out.println("focus gained");
@@ -56,8 +62,25 @@ public class CellGUI extends JPanel {
      *  if there are errors with the cell.
      */
     public void setBackgroundToNormal() {
-        setBackground(DEFAULT_COLOR);
-        myFormulaField.setBackground(DEFAULT_COLOR);
+        setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
+        myFormulaField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
         // Right now there is no way to see if there are errors in a cell.
+    }
+
+    private String getColumnString(int theColumn) {
+        StringBuilder result = new StringBuilder();
+        int currentCol = theColumn;
+        while (currentCol / 26 > 0) {
+            result.append((char) (currentCol % 26 + 'A'));
+            currentCol = currentCol / 26;
+        }
+        result.append((char) (currentCol % 26 + 'A' - 1));
+        return result.reverse().toString();
+    }
+
+    private void changeTheme() {
+        setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
+        setBorder(BorderFactory.createLineBorder(ColorData.getColor(SpreadsheetGUI.theme, "border")));
+        myFormulaField.setForeground(ColorData.getColor(SpreadsheetGUI.theme, "text"));
     }
 }

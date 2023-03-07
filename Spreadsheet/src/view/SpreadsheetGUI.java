@@ -25,6 +25,8 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
     private static final int ROWS = 57; // The top row is for labels
 
     private static final int COLUMNS = 57; // The left column is for labels
+
+    public static String theme = "default";
     private static final LayoutManager CELL_LAYOUT = new GridLayout(ROWS, COLUMNS);
     private static CellGUI[][] myCells = new CellGUI[ROWS][COLUMNS];
 
@@ -52,14 +54,16 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
     private void setupGUI() {
         setTitle("Spreadsheet");
         scrollPane = new JScrollPane(cellPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setSize(new Dimension(PROGRAM_DEFAULT_SIZE.width * 9 / 10, PROGRAM_DEFAULT_SIZE.height * 9 / 10));
+        cellPanel.setSize(PROGRAM_DEFAULT_SIZE);
         add(scrollPane, BorderLayout.CENTER);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setUpCells();
         setUpMenu();
         setSize(PROGRAM_DEFAULT_SIZE);
         setLocationRelativeTo(null);
+        getContentPane().setBackground(Color.black);
     }
 
     private void setUpCells() {
@@ -68,11 +72,22 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
                 if (row == 0 && col == 0) {
-                  cellPanel.add(new JLabel(" "));
+                    JLabel adding = new JLabel(" ");
+                    adding.setOpaque(true);
+                    adding.setBackground(ColorData.getColor(theme, "normal"));
+                  cellPanel.add(adding);
                 } else if (row == 0) {
-                    cellPanel.add(new JLabel(getColumnString(col), SwingConstants.CENTER));
+                    JLabel adding = new JLabel(getColumnString(col), SwingConstants.CENTER);
+                    adding.setOpaque(true);
+                    adding.setBackground(ColorData.getColor(theme, "normal"));
+                    adding.setForeground(ColorData.getColor(theme, "text"));
+                    cellPanel.add(adding);
                 } else if (col == 0) {
-                    cellPanel.add(new JLabel(Integer.toString(row - 1), SwingConstants.CENTER));
+                    JLabel adding = new JLabel(Integer.toString(row - 1), SwingConstants.CENTER);
+                    adding.setOpaque(true);
+                    adding.setBackground(ColorData.getColor(theme, "normal"));
+                    adding.setForeground(ColorData.getColor(theme, "text"));
+                    cellPanel.add(adding);
                 } else {
                     CellGUI cellAdding = new CellGUI(row - 1, col - 1);
                     myCells[row][col] = cellAdding;
