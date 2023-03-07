@@ -26,9 +26,9 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     private static final int COLUMNS = 57; // The left column is for labels
     private static final LayoutManager CELL_LAYOUT = new GridLayout(ROWS, COLUMNS);
-
     private static CellGUI[][] myCells = new CellGUI[ROWS][COLUMNS];
 
+    private static JMenuItem fileMenuItem;
     private static JPanel mainPanel = new JPanel();
     private static JPanel cellPanel = new JPanel();
 
@@ -57,6 +57,7 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setUpCells();
+        setUpMenu();
         setSize(PROGRAM_DEFAULT_SIZE);
         setLocationRelativeTo(null);
     }
@@ -81,6 +82,13 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         }
         cellPanel.revalidate();
         cellPanel.setVisible(true);
+    }
+
+    private void setUpMenu() {
+        JMenuBar menuBar = new JMenuBar();
+        fileMenuItem = new JMenuItem("File");
+        menuBar.add(fileMenuItem);
+        setJMenuBar(menuBar);
     }
 
     private String getColumnString(int theColumn) {
