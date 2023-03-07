@@ -78,9 +78,8 @@ public class CellGUI extends JPanel {
         return result.reverse().toString();
     }
 
-    private void changeTheme() {
-        setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
-        setBorder(BorderFactory.createLineBorder(ColorData.getColor(SpreadsheetGUI.theme, "border")));
+    public void changeTheme() {
+        setBackgroundToNormal();
         myFormulaField.setForeground(ColorData.getColor(SpreadsheetGUI.theme, "text"));
     }
 }

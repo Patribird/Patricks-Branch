@@ -2,6 +2,8 @@ package model.Spreadsheet.src.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -26,11 +28,21 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     private static final int COLUMNS = 57; // The left column is for labels
 
-    public static String theme = "default";
+    public static String theme = "light";
+
+    public JComponent[] borderComponents = new JComponent[ROWS + COLUMNS - 1]; // This array keeps track of the border components so their themes can be changed later
     private static final LayoutManager CELL_LAYOUT = new GridLayout(ROWS, COLUMNS);
     private static CellGUI[][] myCells = new CellGUI[ROWS][COLUMNS];
 
-    private static JMenuItem fileMenuItem;
+    private static JMenu fileMenu;
+
+    private static JMenu optionsMenu;
+
+    private static JMenu themesMenu;
+
+    private static JRadioButtonMenuItem lightThemeButton;
+
+    private static JRadioButtonMenuItem darkThemeButton;
     private static JPanel mainPanel = new JPanel();
     private static JPanel cellPanel = new JPanel();
 
@@ -69,24 +81,31 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
     private void setUpCells() {
         cellPanel.setLayout(CELL_LAYOUT);
         cellPanel.setPreferredSize(CELL_PANEL_SIZE);
+        int borderComponentIndex = 0;
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
                 if (row == 0 && col == 0) {
                     JLabel adding = new JLabel(" ");
                     adding.setOpaque(true);
                     adding.setBackground(ColorData.getColor(theme, "normal"));
-                  cellPanel.add(adding);
+                    borderComponents[borderComponentIndex] = adding;
+                    borderComponentIndex++;
+                    cellPanel.add(adding);
                 } else if (row == 0) {
                     JLabel adding = new JLabel(getColumnString(col), SwingConstants.CENTER);
                     adding.setOpaque(true);
                     adding.setBackground(ColorData.getColor(theme, "normal"));
                     adding.setForeground(ColorData.getColor(theme, "text"));
+                    borderComponents[borderComponentIndex] = adding;
+                    borderComponentIndex++;
                     cellPanel.add(adding);
                 } else if (col == 0) {
                     JLabel adding = new JLabel(Integer.toString(row - 1), SwingConstants.CENTER);
                     adding.setOpaque(true);
                     adding.setBackground(ColorData.getColor(theme, "normal"));
                     adding.setForeground(ColorData.getColor(theme, "text"));
+                    borderComponents[borderComponentIndex] = adding;
+                    borderComponentIndex++;
                     cellPanel.add(adding);
                 } else {
                     CellGUI cellAdding = new CellGUI(row - 1, col - 1);
@@ -101,9 +120,36 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     private void setUpMenu() {
         JMenuBar menuBar = new JMenuBar();
-        fileMenuItem = new JMenuItem("File");
-        menuBar.add(fileMenuItem);
+        menuBar.setAlignmentX(SwingConstants.LEFT);
+        fileMenu = new JMenu("File");
+        optionsMenu = new JMenu("Options");
+        themesMenu = new JMenu("Themes");
+        optionsMenu.add(themesMenu);
+        lightThemeButton = new JRadioButtonMenuItem("Light");
+        darkThemeButton = new JRadioButtonMenuItem("Dark");
+        ButtonGroup group = new ButtonGroup();
+        group.add(lightThemeButton);
+        group.add(darkThemeButton);
+        lightThemeButton.setSelected(true);
+        themesMenu.add(lightThemeButton);
+        themesMenu.add(darkThemeButton);
+        menuBar.add(fileMenu);
+        menuBar.add(optionsMenu);
         setJMenuBar(menuBar);
+
+        lightThemeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeTheme("light");
+            }
+        });
+
+        darkThemeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeTheme("dark");
+            }
+        });
     }
 
     private String getColumnString(int theColumn) {
@@ -115,5 +161,27 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         }
         result.append((char) (currentCol % 26 + 'A' - 1));
         return result.reverse().toString();
+    }
+
+    private void changeTheme(String newTheme) {
+        if (newTheme.equals(theme)) {
+            return;
+        }
+        theme = newTheme;
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
+                if (myCells[row][col] != null) {
+                    System.out.println(Integer.toString(row) + "," + Integer.toString(col));
+                    myCells[row][col].changeTheme();
+                } else {
+                    System.out.println("null cell");
+                }
+            }
+        }
+        for (JComponent component : borderComponents) {
+            component.setOpaque(true);
+            component.setBackground(ColorData.getColor(theme, "normal"));
+            component.setForeground(ColorData.getColor(theme, "text"));
+        }
     }
 }
