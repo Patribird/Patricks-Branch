@@ -9,6 +9,7 @@ import java.awt.event.*;
  * SpreadsheetGUI.java to use when constructing the spreadsheet.
  * @author Patrick Hern
  * @author Nathameion Montgomery
+ * @author Moon chang
  */
 public class CellGUI extends JPanel {
     private int myRow;
@@ -80,6 +81,7 @@ public class CellGUI extends JPanel {
 
     public void changeTheme() {
         setBackgroundToNormal();
+        setBorder(BorderFactory.createLineBorder(ColorData.getColor(SpreadsheetGUI.theme, "border")));
         myFormulaField.setForeground(ColorData.getColor(SpreadsheetGUI.theme, "text"));
     }
 }

@@ -10,6 +10,7 @@ import static model.Spreadsheet.src.model.OperatorToken.*;
  * in each Node.
  * @author Patrick Hern
  * @author Nathameion Montgomery
+ * @author Moon Chang
  */
 public class ExpressionTreeNode {
 	/** The root of the expression tree. */
