@@ -2,6 +2,7 @@ package model.Spreadsheet.src.controller;
 
 import model.Spreadsheet.src.model.Cell;
 import model.Spreadsheet.src.model.CellToken;
+import model.Spreadsheet.src.view.SpreadsheetGUI;
 
 import java.util.Stack;
 
@@ -15,17 +16,20 @@ import java.util.Stack;
  */
 public class Spreadsheet {
     /** A 2-Dimensional array that represents a spreadsheet. */
-    private final Cell[][] mySpreadsheet;
+    private static Cell[][] mySpreadsheet;
     /** A "bad cell" will return -1 if an operation goes wrong. */
     private final int BadCell = -1;
+
+    private final SpreadsheetGUI myGUI;
 
     /**
      * The constructor for the spreadsheet that initializes the
      * spreadsheet with the proper dimensions.
      * @param theRowAndCols The size of the square spreadsheet.
      */
-    public Spreadsheet(final int theRowAndCols) {
+    public Spreadsheet(final int theRowAndCols, final SpreadsheetGUI theGUI) {
         mySpreadsheet = new Cell[theRowAndCols][theRowAndCols];
+        myGUI = theGUI;
     }
 
     /**
@@ -131,6 +135,9 @@ public class Spreadsheet {
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormula(expTreeTokenString);
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormulaInOrder(inOrder);
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].evaluate(this);
+
+        myGUI.setCellText(cellToken.getRow() + 1, cellToken.getColumn() + 1,
+                Integer.toString(mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].getValue()));
     }
 
     /**
@@ -278,11 +285,11 @@ public class Spreadsheet {
      * @param col The column of the cell.
      * @return Returns a cell found from the spreadsheet.
      */
-    public Cell getCell(final int row, final int col) {
+    public static Cell getCell(final int row, final int col) {
         try {
             return mySpreadsheet[row][col];
         } catch (Exception e) {
-            System.out.println("Invalid cell");
+            //System.out.println("Invalid cell");
             return null;
         }
     }

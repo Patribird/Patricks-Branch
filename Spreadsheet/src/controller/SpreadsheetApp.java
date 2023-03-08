@@ -20,6 +20,8 @@ import static model.Spreadsheet.src.model.OperatorToken.*;
  * @author Moon Chang
  */
 public class SpreadsheetApp {
+    static Spreadsheet theSpreadsheet;
+    private static final int ROWS_AND_COLUMNS = 57;
 
     /**
      * Read a string from standard input.
@@ -152,6 +154,27 @@ public class SpreadsheetApp {
         System.out.println();
     }
 
+    public static void GUIChangeCell(int row, int col, String inputFormula) {
+        Stack expTreeTokenStack = SpreadSheetUtility.getFormula(inputFormula);
+        Token expTreeToken;
+        CellToken cellToken = new CellToken();
+        cellToken.setRow(row);
+        cellToken.setColumn(col);
+        ExpressionTreeNode root = ExpressionTreeNode.GetExpressionTree(expTreeTokenStack);
+        // DEBUG CODE
+        ExpressionTree.printTree(root);
+        String postFix = ""; // Temp Code
+        // This code prints out the expression stack from
+        // top to bottom (that is, reverse of postfix).
+        while (!expTreeTokenStack.isEmpty()) {
+            expTreeToken = (Token) expTreeTokenStack.pop();
+            printExpressionTreeToken(expTreeToken);
+
+            postFix += expTreeToken + " ";
+        }
+        theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, ExpressionTree.stringTree(root), inputFormula);
+    }
+
     /**
      * Prints the expression tree's token out to the console.
      * @param theExpTreeToken The expression tree token to be printed.
@@ -167,8 +190,8 @@ public class SpreadsheetApp {
      */
     public static void main(String[] args) {
         //Spreadsheet theSpreadsheet = new Spreadsheet(8);
-        Spreadsheet theSpreadsheet = new Spreadsheet(57);
-        SpreadsheetGUI theGUI = new SpreadsheetGUI(theSpreadsheet.getNumRows(), theSpreadsheet.getNumColumns());
+        SpreadsheetGUI theGUI = new SpreadsheetGUI(ROWS_AND_COLUMNS, ROWS_AND_COLUMNS);
+        theSpreadsheet = new Spreadsheet(ROWS_AND_COLUMNS, theGUI);
 
         boolean done = false;
         String command = "";

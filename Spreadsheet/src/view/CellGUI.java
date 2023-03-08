@@ -1,5 +1,8 @@
 package model.Spreadsheet.src.view;
 
+import model.Spreadsheet.src.controller.Spreadsheet;
+import model.Spreadsheet.src.controller.SpreadsheetApp;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -15,21 +18,19 @@ public class CellGUI extends JPanel {
     private int myRow;
     private int myCol;
 
-    private JTextField myFormulaField;
-
-    private boolean myFormulaFieldHoveredOver = false;
+    private JTextField myTextField;
 
     public CellGUI(final int theRow, final int theCol) {
         myRow = theRow;
         myCol = theCol;
 
-        myFormulaField = new JTextField(10);
-        myFormulaField.setHorizontalAlignment(SwingConstants.CENTER);
-        myFormulaField.setBorder(BorderFactory.createEmptyBorder());
-        myFormulaField.setForeground(ColorData.getColor(SpreadsheetGUI.theme, "text"));
-        myFormulaField.setToolTipText("Row: " + Integer.toString(theRow) + ", Column: " + getColumnString(theCol + 1));
+        myTextField = new JTextField(10);
+        myTextField.setHorizontalAlignment(SwingConstants.CENTER);
+        myTextField.setBorder(BorderFactory.createEmptyBorder());
+        myTextField.setForeground(ColorData.getColor(SpreadsheetGUI.theme, "text"));
+        myTextField.setToolTipText("Row: " + Integer.toString(theRow) + ", Column: " + getColumnString(theCol + 1));
 
-        myFormulaField.addFocusListener(new FocusAdapter() {
+        myTextField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 highlightCell();
@@ -37,34 +38,62 @@ public class CellGUI extends JPanel {
 
             @Override
             public void focusLost(FocusEvent e) {
-                setBackgroundToNormal();
+                setCellToNormal();
             }
         });
 
         setBorder(BorderFactory.createLineBorder(ColorData.getColor(SpreadsheetGUI.theme, "border")));
         setLayout(new BorderLayout());
         setSize(new Dimension(60, 20));
-        add(myFormulaField, BorderLayout.CENTER);
-        setBackgroundToNormal();
+        add(myTextField, BorderLayout.CENTER);
+        setCellToNormal();
         setVisible(true);
+        myTextField.addKeyListener(new KeyAdapter() {
+            /**
+             * Invoked when a key has been typed.
+             * This event occurs when a key press is followed by a key release.
+             *
+             * @param e
+             */
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    myTextField.transferFocus();
+                }
+            }
+        });
     }
 
     public void highlightCell() {
         setBackground(ColorData.getColor(SpreadsheetGUI.theme, "highlight"));
-        myFormulaField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "highlight"));
+        myTextField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "highlight"));
         //System.out.println(myRow + ", " + myCol);
-        myFormulaField.grabFocus();
+        myTextField.grabFocus();
+        String formula = "";
+        if (Spreadsheet.getCell(myRow, myCol) != null) {
+            formula = Spreadsheet.getCell(myRow, myCol).getFormula();
+        }
+        myTextField.setText(formula);
         //System.out.println("focus gained");
     }
 
     /**
      *  Sets the background to the default color if there
      *  are no errors with the cell, or the error color
-     *  if there are errors with the cell.
+     *  if there are errors with the cell. Also changes
+     *  the text in the cell to its value.
      */
-    public void setBackgroundToNormal() {
+    public void setCellToNormal() {
         setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
-        myFormulaField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
+        myTextField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
+        if (!myTextField.getText().equals("")) {
+            SpreadsheetApp.GUIChangeCell(myRow, myCol, myTextField.getText());
+        }
+        String value = "";
+        if (Spreadsheet.getCell(myRow, myCol) != null) {
+            value = Integer.toString(Spreadsheet.getCell(myRow, myCol).getValue());
+        }
+        myTextField.setText(value);
         // Right now there is no way to see if there are errors in a cell.
     }
 
@@ -80,8 +109,12 @@ public class CellGUI extends JPanel {
     }
 
     public void changeTheme() {
-        setBackgroundToNormal();
+        setCellToNormal();
         setBorder(BorderFactory.createLineBorder(ColorData.getColor(SpreadsheetGUI.theme, "border")));
-        myFormulaField.setForeground(ColorData.getColor(SpreadsheetGUI.theme, "text"));
+        myTextField.setForeground(ColorData.getColor(SpreadsheetGUI.theme, "text"));
+    }
+
+    public void updateText(final String newText) {
+        myTextField.setText(newText);
     }
 }

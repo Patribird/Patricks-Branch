@@ -1,5 +1,7 @@
 package model.Spreadsheet.src.view;
 
+import model.Spreadsheet.src.controller.Spreadsheet;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -75,12 +77,13 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         add(scrollPane, BorderLayout.CENTER);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+
         setUpCells();
         setUpMenu();
         setSize(PROGRAM_DEFAULT_SIZE);
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.black);
+        setVisible(true);
     }
 
     private void setUpCells() {
@@ -190,7 +193,7 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         }
     }
 
-    public void setCellFormula(int theRow, int theCol, String theFormula) {
-
+    public void setCellText(int theRow, int theCol, String theText) {
+        myCells[theRow][theCol].updateText(theText);
     }
 }
