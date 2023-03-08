@@ -120,6 +120,9 @@ public class Spreadsheet {
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormula(expTreeTokenStack);
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormulaInOrder(inOrder);
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].evaluate(this);
+
+        myGUI.setCellText(cellToken.getRow() + 1, cellToken.getColumn() + 1,
+                Integer.toString(mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].getValue()));
     }
 
     /**
