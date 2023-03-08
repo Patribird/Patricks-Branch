@@ -87,7 +87,7 @@ public class CellGUI extends JPanel {
             formula = myTextField.getText();
         }
         myTextField.setText(formula);
-        System.out.println(formula);
+        //System.out.println(formula);
         //System.out.println("focus gained");
     }
 
@@ -115,10 +115,15 @@ public class CellGUI extends JPanel {
             try {
                 value = Integer.toString(Spreadsheet.getCell(myRow, myCol).getValue());
             } catch (Exception e) {
-                value = "";
+                return;
             }
         }
         myTextField.setText(value);
+    }
+
+    public void setCellToNormal(boolean error, String message) {
+        setCellToNormal(error);
+        myTextField.setText(message);
     }
 
     private String getColumnString(int theColumn) {
@@ -148,5 +153,10 @@ public class CellGUI extends JPanel {
 
     public void updateText(final String newText) {
         myTextField.setText(newText);
+    }
+
+    public void setErrorInCell(boolean setting, String message) {
+        errorInCell = setting;
+        setCellToNormal(setting, message);
     }
 }

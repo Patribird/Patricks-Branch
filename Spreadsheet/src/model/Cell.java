@@ -155,7 +155,11 @@ public class Cell {
 				cellToken = new CellToken();
 				index = SpreadSheetUtility.getCellToken(formula, index, cellToken);
 				cellsInMyFormula.add(theSpreadsheet.getCell(cellToken.getRow(), cellToken.getColumn()));
-				theSpreadsheet.getCell(cellToken.getRow(), cellToken.getColumn()).addToCellsThatContainThisInFormula(this);
+				try {
+					theSpreadsheet.getCell(cellToken.getRow(), cellToken.getColumn()).addToCellsThatContainThisInFormula(this);
+				} catch (Exception e) {
+					//cellsInMyFormula.add(null);
+				}
 				if (cellToken.getRow() == -1) {
 					break;
 				}

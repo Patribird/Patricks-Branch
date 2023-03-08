@@ -297,7 +297,6 @@ public class Spreadsheet {
         try {
             return mySpreadsheet[row][col];
         } catch (Exception e) {
-            //System.out.println("Invalid cell");
             return null;
         }
     }
@@ -332,11 +331,13 @@ public class Spreadsheet {
         }
 
         boolean isCycle = false;
-        while (!evaluationOrder.isEmpty() && !isCycle) {
+        while (!evaluationOrder.isEmpty()) {
+            isCycle = false;
             evaluationOrder.sort(new CellPrerequisiteComparator());
             Cell currentCell = evaluationOrder.remove(0);
             if (currentCell.getCellsInMyFormula().size() > 0) {
                 isCycle = true;
+                myGUI.setErrorInCell(currentCell.getRow(), currentCell.getColumn(), true, "CYCLE");
                 System.out.println("Cycle detected");
             } else {
                 currentCell.removeSelfFromOtherCellsDependencyList(this);
@@ -344,18 +345,20 @@ public class Spreadsheet {
                 myGUI.setCellText(currentCell.getRow(), currentCell.getColumn(), Integer.toString(currentCell.getValue()));
 
                 if (currentCell.getFormula() != null) {
-                    System.out.println("evaluating cell with formula " + currentCell.getFormula());
+                    //System.out.println("evaluating cell with formula " + currentCell.getFormula());
                 }
             }
         }
 
-        for (int row = 0; row < mySpreadsheet.length; row++) {
-            for (int col = 0; col < mySpreadsheet[0].length; col++) {
-                try {
-                    myGUI.setCellText(row + 1, col + 1,
-                            Integer.toString(mySpreadsheet[row][col].getValue()));
-                } catch (Exception e) {
-                    myGUI.setCellText(row, col, "");
+        if (!isCycle) {
+            for (int row = 0; row < mySpreadsheet.length; row++) {
+                for (int col = 0; col < mySpreadsheet[0].length; col++) {
+                    try {
+                        myGUI.setCellText(row + 1, col + 1,
+                                Integer.toString(mySpreadsheet[row][col].getValue()));
+                    } catch (Exception e) {
+                        myGUI.setCellText(row, col, "");
+                    }
                 }
             }
         }

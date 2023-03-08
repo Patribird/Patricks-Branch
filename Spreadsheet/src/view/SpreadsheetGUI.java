@@ -221,4 +221,12 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         myCells[theRow][theCol].updateText(theText);
     }
 
+    public void setErrorInCell(int row, int col, boolean setting, String message) {
+        try {
+            myCells[row + 1][col + 1].setErrorInCell(setting, message);
+        } catch (Exception e) {
+
+        }
+    }
+
 }
