@@ -77,13 +77,13 @@ public class CellToken extends Token {
     private String getColumnCharacters() {
         StringBuilder result = new StringBuilder();
         int currentRow = myRow;
-        while (currentRow > 0) {
+
+        do {
             int letterNumber = (myColumn % 26) + 'A';
             result.append((char) letterNumber);
             currentRow = currentRow / 26;
-        }
-        int letterNumber = (myColumn % 26) + 'A';
-        result.append((char) letterNumber);
+        } while (currentRow > 0);
+
         return result.toString();
     }
 
