@@ -50,7 +50,7 @@ public class SpreadsheetApp {
 
     /**
      * Prints the values stored in the cells.
-     * @param theSpreadsheet The spreadsheet with all of it's cells.
+     * @param theSpreadsheet The spreadsheet with all of its cells.
      */
     private static void menuPrintValues(Spreadsheet theSpreadsheet) {
         theSpreadsheet.printValues();
@@ -59,7 +59,7 @@ public class SpreadsheetApp {
     /**
      * Prints the cell's formula out to the console as a part of the
      * print cell menu option.
-     * @param theSpreadsheet
+     * @param theSpreadsheet The spreadsheet with all of the cells.
      */
     private static void menuPrintCellFormula(Spreadsheet theSpreadsheet) {
         CellToken cellToken = new CellToken();
@@ -130,8 +130,6 @@ public class SpreadsheetApp {
         System.out.println("Enter the cell's new formula: ");
         inputFormula = readString();
         expTreeTokenStack = SpreadSheetUtility.getFormula(inputFormula);
-
-
 
         ExpressionTreeNode root = ExpressionTreeNode.GetExpressionTree(expTreeTokenStack);
         // DEBUG CODE

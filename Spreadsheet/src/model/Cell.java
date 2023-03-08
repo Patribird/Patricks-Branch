@@ -22,6 +22,7 @@ public class Cell {
 	private ExpressionTree myExpressionTree;
 	/** The formula in order of how it wa typed. */
 	private String myInOrderFormula;
+
 	/**
 	 * Sets the formula of the Cell to the formula provided.
 	 * @param theFormula The formula for the cell to be set to.
