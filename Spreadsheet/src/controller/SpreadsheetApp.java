@@ -165,8 +165,9 @@ public class SpreadsheetApp {
      * @param args The arguments passed into main.
      */
     public static void main(String[] args) {
-        Spreadsheet theSpreadsheet = new Spreadsheet(8);
-        SpreadsheetGUI theGUI = new SpreadsheetGUI();
+        //Spreadsheet theSpreadsheet = new Spreadsheet(8);
+        Spreadsheet theSpreadsheet = new Spreadsheet(57);
+        SpreadsheetGUI theGUI = new SpreadsheetGUI(theSpreadsheet.getNumRows(), theSpreadsheet.getNumColumns());
 
         boolean done = false;
         String command = "";

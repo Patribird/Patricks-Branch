@@ -58,8 +58,12 @@ public class ExpressionTree {
 	public static int evaluate(ExpressionTreeNode expTreeNode, Spreadsheet s) {
 		// Literals and Cell tokens are leaves so just return whatever value is associated with them
 		// But Operators will have both a left and right child, so we need to evaluate those as well.
-
-		Token token = expTreeNode.getToken();
+		Token token;
+		if (expTreeNode == null) {
+			token = new LiteralToken(0);
+		} else {
+			token = expTreeNode.getToken();
+		}
 		if (token instanceof LiteralToken) {
 			return ((LiteralToken) token).getValue();
 		} else if (token instanceof CellToken) {

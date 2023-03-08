@@ -24,15 +24,15 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     private static final Dimension CELL_PANEL_SIZE = new Dimension(PROGRAM_DEFAULT_SIZE.width * 6, PROGRAM_DEFAULT_SIZE.height * 2);
 
-    private static final int ROWS = 57; // The top row is for labels
+    private static int rows = 57; // The top row is for labels (57 is the default number of rows)
 
-    private static final int COLUMNS = 57; // The left column is for labels
+    private static int columns = 57; // The left column is for labels (57 is the default number of columns)
 
     public static String theme = "light";
 
-    public JComponent[] borderComponents = new JComponent[ROWS + COLUMNS - 1]; // This array keeps track of the border components so their themes can be changed later
-    private static final LayoutManager CELL_LAYOUT = new GridLayout(ROWS, COLUMNS);
-    private static CellGUI[][] myCells = new CellGUI[ROWS][COLUMNS];
+    public JComponent[] borderComponents;
+    private static LayoutManager CELL_LAYOUT;
+    private static CellGUI[][] myCells;
 
     private static JMenu fileMenu;
 
@@ -48,8 +48,13 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     private JScrollPane scrollPane;
 
-    public SpreadsheetGUI() {
-        setupGUI();
+    public SpreadsheetGUI(int theRows, int theColumns) {
+        rows = theRows;
+        columns = theColumns;
+        CELL_LAYOUT = new GridLayout(rows, columns);
+        borderComponents = new JComponent[rows + columns - 1]; // This array keeps track of the border components so their themes can be changed later
+        myCells = new CellGUI[rows][columns];
+        setupGUI(theRows, theColumns);
     }
 
     /**
@@ -63,7 +68,7 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     }
 
-    private void setupGUI() {
+    private void setupGUI(int theRows, int theColumns) {
         setTitle("Spreadsheet");
         scrollPane = new JScrollPane(cellPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         cellPanel.setSize(PROGRAM_DEFAULT_SIZE);
@@ -82,8 +87,8 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         cellPanel.setLayout(CELL_LAYOUT);
         cellPanel.setPreferredSize(CELL_PANEL_SIZE);
         int borderComponentIndex = 0;
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLUMNS; col++) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < columns; col++) {
                 if (row == 0 && col == 0) {
                     JLabel adding = new JLabel(" ");
                     adding.setOpaque(true);
@@ -168,13 +173,13 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
             return;
         }
         theme = newTheme;
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLUMNS; col++) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < columns; col++) {
                 if (myCells[row][col] != null) {
-                    System.out.println(Integer.toString(row) + "," + Integer.toString(col));
+                    //System.out.println(Integer.toString(row) + "," + Integer.toString(col));
                     myCells[row][col].changeTheme();
                 } else {
-                    System.out.println("null cell");
+                    //System.out.println("null cell");
                 }
             }
         }
@@ -183,5 +188,9 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
             component.setBackground(ColorData.getColor(theme, "normal"));
             component.setForeground(ColorData.getColor(theme, "text"));
         }
+    }
+
+    public void setCellFormula(int theRow, int theCol, String theFormula) {
+
     }
 }
