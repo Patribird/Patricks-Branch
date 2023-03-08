@@ -19,7 +19,7 @@ public class Spreadsheet {
     private static Cell[][] mySpreadsheet;
     /** A "bad cell" will return -1 if an operation goes wrong. */
     private final int BadCell = -1;
-
+    /** The GUI for the spreadsheet. */
     private final SpreadsheetGUI myGUI;
 
     /**
@@ -113,13 +113,16 @@ public class Spreadsheet {
      *                  be declared and set.
      * @param expTreeTokenStack The expressionTreeStack String for
      *                           setting the formula.
-     * @param inOrder The current order of the
+     * @param inOrder The proper order of the equation.
      */
     public void changeCellFormulaAndRecalculate(CellToken cellToken, Stack expTreeTokenStack, String inOrder) {
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell();
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormula(expTreeTokenStack);
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormulaInOrder(inOrder);
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].evaluate(this);
+
+        myGUI.setCellText(cellToken.getRow() + 1, cellToken.getColumn() + 1,
+                Integer.toString(mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].getValue()));
     }
 
     /**
@@ -127,8 +130,8 @@ public class Spreadsheet {
      * @param cellToken The CellToken passed where a new cell will
      *                  be declared and set.
      * @param expTreeTokenString The expressionTreeToken String for
-     *                           setting the fromula
-     * @param inOrder The current order of the
+     *                           setting the formula.
+     * @param inOrder The proper order of the equation.
      */
     public void changeCellFormulaAndRecalculate(CellToken cellToken, String expTreeTokenString, String inOrder) {
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell();

@@ -83,8 +83,8 @@ public class ExpressionTree {
 			ExpressionTreeNode rightSubtree = expTreeNode.myRight;
 			ExpressionTreeNode leftSubtree  = expTreeNode.myLeft;
 
-			// COMMENTED OUT SECTION HAS A BUG WHERE IT CAN'T
-			// DIFFERENTIATE BETWEEN DOUBLE NEGATIVES AND SUBTRACTING
+			// COMMENTED OUT SECTION HAS A BUG WHERE IT CAN'T DIFFERENTIATE
+			//  BETWEEN DOUBLE NEGATIVES AND SUBTRACTING
 			// A NEGATIVE FROM A NEGATIVE.
 //			boolean isDoubleNeg = checkForDoubleNeg(expTreeNode);
 
