@@ -18,6 +18,7 @@ public class OperatorToken extends Token {
     public static final char Div = '/';
     /** A constant char that represents precedence with a parenthesis. */
     public static final char LeftParen = '(';
+    public static final char Exponent = '^';
     /** A constant char that represents the operator. */
     private final char myOperator;
 
@@ -56,8 +57,11 @@ public class OperatorToken extends Token {
             case Mult, Div -> {
                 return 1;
             }
-            case LeftParen -> {
+            case Exponent -> {
                 return 2;
+            }
+            case LeftParen -> {
+                return 3;
             }
             default -> {
                 // This case should NEVER happen

@@ -60,8 +60,10 @@ public class SpreadSheetUtility {
                 return 1;
             case OperatorToken.Div:
                 return 1;
-            case OperatorToken.LeftParen:
+            case OperatorToken.Exponent:
                 return 2;
+            case OperatorToken.LeftParen:
+                return 3;
             default:
                 // This case should NEVER happen
                 System.out.println("Error in operatorPriority.");
@@ -264,6 +266,7 @@ public class SpreadSheetUtility {
                     case OperatorToken.Mult:
                     case OperatorToken.Div:
                     case OperatorToken.LeftParen:
+                    case OperatorToken.Exponent:
                         // push operatorTokens onto the output stack until
                         // we reach an operator on the operator stack that has
                         // lower priority than the current one.
@@ -295,6 +298,17 @@ public class SpreadSheetUtility {
                 stackOperator = (OperatorToken) operatorStack.pop();
                 // This code does not handle operatorStack underflow.
                 while (stackOperator.getOperatorToken() != OperatorToken.LeftParen) {
+                    // pop operators off the stack until a LeftParen appears and
+                    // place the operators on the output stack
+                    returnStack.push(stackOperator);
+                    stackOperator = (OperatorToken) operatorStack.pop();
+                }
+                index++;
+            } else if (ch == '^') {    // maybe define OperatorToken.RightParen ?
+                OperatorToken stackOperator;
+                stackOperator = (OperatorToken) operatorStack.pop();
+                // This code does not handle operatorStack underflow.
+                while (stackOperator.getOperatorToken() != OperatorToken.Exponent) {
                     // pop operators off the stack until a LeftParen appears and
                     // place the operators on the output stack
                     returnStack.push(stackOperator);
@@ -351,7 +365,7 @@ public class SpreadSheetUtility {
      * @return Returns if the char is an operator.
      */
     public static boolean isOperator(char ch) {
-        if (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '(') {
+        if (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '(' || ch =='^') {
             return true;
         }
         return false;

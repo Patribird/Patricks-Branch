@@ -70,6 +70,7 @@ public class ExpressionTreeNode {
 				(ch == Minus) ||
 				(ch == Mult) ||
 				(ch == Div) ||
+				(ch == Exponent) ||
 				(ch == LeftParen) );
 	}
 

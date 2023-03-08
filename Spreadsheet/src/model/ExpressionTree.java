@@ -101,6 +101,8 @@ public class ExpressionTree {
 				return evaluate(rightSubtree, s) * evaluate(leftSubtree, s);
 			} else if (op == '/') {
 				return evaluate(leftSubtree, s) / evaluate(rightSubtree, s);
+			} else if (op == '^') {
+				return (int) Math.pow(evaluate(leftSubtree, s), evaluate(rightSubtree, s));
 			}
 
 		}
