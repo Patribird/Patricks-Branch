@@ -59,7 +59,7 @@ public class SpreadsheetApp {
     /**
      * Prints the cell's formula out to the console as a part of the
      * print cell menu option.
-     * @param theSpreadsheet The spreadsheet with all of the cells.
+     * @param theSpreadsheet The spreadsheet with all the cells.
      */
     private static void menuPrintCellFormula(Spreadsheet theSpreadsheet) {
         CellToken cellToken = new CellToken();

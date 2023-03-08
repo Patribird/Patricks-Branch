@@ -23,7 +23,7 @@ public class Spreadsheet {
     private final int BadCell = -1;
     /** The GUI for the spreadsheet. */
     private final SpreadsheetGUI myGUI;
-
+    /** The ArrayList of Cells that holds the evaluation order. */
     ArrayList<Cell> evaluationOrder = new ArrayList<Cell>();
 
     /**
@@ -363,6 +363,7 @@ public class Spreadsheet {
             }
         }
     }
+
     class CellPrerequisiteComparator implements Comparator<Cell> {
         @Override
         public int compare(Cell cell1, Cell cell2) {

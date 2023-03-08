@@ -122,7 +122,6 @@ public class ExpressionTree {
 //		try {
 //			token = expTreeNode.getToken();
 //			leftToken = expTreeNode.myLeft.getToken();
-//			rightToken = expTreeNode.myRight.getToken();
 //		} catch (Exception e) {
 //			return false;
 //		}
