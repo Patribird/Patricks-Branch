@@ -82,6 +82,8 @@ public class CellToken extends Token {
             result.append((char) letterNumber);
             currentRow = currentRow / 26;
         }
+        int letterNumber = (myColumn % 26) + 'A';
+        result.append((char) letterNumber);
         return result.toString();
     }
 
