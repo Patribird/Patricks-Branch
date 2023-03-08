@@ -1,9 +1,11 @@
 package model.Spreadsheet.src.controller;
 
-import model.Spreadsheet.src.model.Cell;
-import model.Spreadsheet.src.model.CellToken;
+import model.Spreadsheet.src.model.*;
 import model.Spreadsheet.src.view.SpreadsheetGUI;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 import java.util.Stack;
 
 /**
@@ -21,6 +23,8 @@ public class Spreadsheet {
     private final int BadCell = -1;
     /** The GUI for the spreadsheet. */
     private final SpreadsheetGUI myGUI;
+
+    ArrayList<Cell> evaluationOrder = new ArrayList<Cell>();
 
     /**
      * The constructor for the spreadsheet that initializes the
@@ -116,7 +120,7 @@ public class Spreadsheet {
      * @param inOrder The proper order of the equation.
      */
     public void changeCellFormulaAndRecalculate(CellToken cellToken, Stack expTreeTokenStack, String inOrder) {
-        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell();
+        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell(cellToken.getRow(), cellToken.getColumn());
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormula(expTreeTokenStack);
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormulaInOrder(inOrder);
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].evaluate(this);
@@ -134,13 +138,12 @@ public class Spreadsheet {
      * @param inOrder The proper order of the equation.
      */
     public void changeCellFormulaAndRecalculate(CellToken cellToken, String expTreeTokenString, String inOrder) {
-        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell();
+        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell(cellToken.getRow(), cellToken.getColumn());
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormula(expTreeTokenString);
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormulaInOrder(inOrder);
-        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].evaluate(this);
 
-        myGUI.setCellText(cellToken.getRow() + 1, cellToken.getColumn() + 1,
-                Integer.toString(mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].getValue()));
+        //mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].evaluate(this);
+        this.evaluate();
     }
 
     /**
@@ -294,6 +297,72 @@ public class Spreadsheet {
         } catch (Exception e) {
             //System.out.println("Invalid cell");
             return null;
+        }
+    }
+
+    public void evaluate() {
+        for (int row = 0; row < mySpreadsheet.length; row++) {
+            for (int col = 0; col < mySpreadsheet[0].length; col++) {
+                if (mySpreadsheet[row][col] != null) {
+                    mySpreadsheet[row][col].clearLists();
+                }
+            }
+        }
+
+        for (int row = 0; row < mySpreadsheet.length; row++) {
+            for (int col = 0; col < mySpreadsheet[0].length; col++) {
+                if (mySpreadsheet[row][col] == null) {
+                    mySpreadsheet[row][col] = new Cell(row, col);
+                }
+
+                if (mySpreadsheet[row][col].getFormula() == null) {
+                    mySpreadsheet[row][col].createListOfPrerequisites("", this);
+                } else {
+                    mySpreadsheet[row][col].createListOfPrerequisites(mySpreadsheet[row][col].getFormula(), this);
+                }
+            }
+        }
+
+        for (int row = 0; row < mySpreadsheet.length; row++) {
+            for (int col = 0; col < mySpreadsheet[0].length; col++) {
+                evaluationOrder.add(mySpreadsheet[row][col]);
+            }
+        }
+
+        boolean isCycle = false;
+        while (!evaluationOrder.isEmpty() && !isCycle) {
+            evaluationOrder.sort(new CellPrerequisiteComparator());
+            Cell currentCell = evaluationOrder.remove(0);
+            if (currentCell.getCellsInMyFormula().size() > 0) {
+                isCycle = true;
+                System.out.println("Cycle detected");
+            } else {
+                currentCell.removeSelfFromOtherCellsDependencyList(this);
+                currentCell.evaluate(this);
+                myGUI.setCellText(currentCell.getRow(), currentCell.getColumn(), Integer.toString(currentCell.getValue()));
+
+                if (currentCell.getFormula() != null) {
+                    System.out.println("evaluating cell with formula " + currentCell.getFormula());
+                }
+            }
+        }
+
+        for (int row = 0; row < mySpreadsheet.length; row++) {
+            for (int col = 0; col < mySpreadsheet[0].length; col++) {
+                try {
+                    myGUI.setCellText(row + 1, col + 1,
+                            Integer.toString(mySpreadsheet[row][col].getValue()));
+                } catch (Exception e) {
+                    myGUI.setCellText(row, col, "");
+                }
+            }
+        }
+    }
+    class CellPrerequisiteComparator implements Comparator<Cell> {
+        @Override
+        public int compare(Cell cell1, Cell cell2) {
+            return Integer.compare(cell1.getCellsThatContainThisInFormula().size(),
+                    cell2.getCellsThatContainThisInFormula().size()) * -1;
         }
     }
 }

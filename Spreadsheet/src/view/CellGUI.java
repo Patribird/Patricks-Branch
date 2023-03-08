@@ -46,6 +46,7 @@ public class CellGUI extends JPanel {
                 } catch (Exception exception) {
                     setCellToNormal(true);
                     errorInCell = true;
+                    exception.printStackTrace();
                 }
             }
         });
@@ -111,7 +112,11 @@ public class CellGUI extends JPanel {
         }
         String value = "";
         if (Spreadsheet.getCell(myRow, myCol) != null) {
-            value = Integer.toString(Spreadsheet.getCell(myRow, myCol).getValue());
+            try {
+                value = Integer.toString(Spreadsheet.getCell(myRow, myCol).getValue());
+            } catch (Exception e) {
+                value = "";
+            }
         }
         myTextField.setText(value);
     }

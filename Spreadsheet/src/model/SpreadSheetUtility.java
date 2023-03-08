@@ -96,7 +96,7 @@ public class SpreadSheetUtility {
      * @return  index corresponding to the position in the string just after the cell
     reference
      */
-    static int getCellToken(String inputString, int startIndex, CellToken cellToken) {
+    public static int getCellToken(String inputString, int startIndex, CellToken cellToken) {
         char ch;
         int column = 0;
         int row = 0;
@@ -229,6 +229,10 @@ public class SpreadSheetUtility {
      * This algorithm follows the algorithm described in Weiss, pages 105-108.
      */
     public static Stack getFormula(String formula) {
+        if (formula == null) {
+            formula = "0";
+        }
+
         Stack returnStack = new Stack();  // stack of Tokens (representing a postfix expression)
         boolean error = false;
         char ch = ' ';

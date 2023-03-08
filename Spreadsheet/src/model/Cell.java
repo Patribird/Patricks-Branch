@@ -2,6 +2,7 @@ package model.Spreadsheet.src.model;
 
 import model.Spreadsheet.src.controller.Spreadsheet;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -14,15 +15,26 @@ import java.util.Stack;
  * @author Moon Chang
  */
 public class Cell {
+	private final int myRow;
+
+	private final int myCol;
 	/** The formula of the cell. */
 	private String myFormula;
 	/** The value of the cell. */
 	private Integer myValue;
 	/** The ExpressionTree of the Cell. */
 	private ExpressionTree myExpressionTree;
-	/** The formula in order of how it wa typed. */
+	/** The formula in order of how it was typed. */
 	private String myInOrderFormula;
 
+	private final ArrayList<Cell> cellsInMyFormula = new ArrayList<Cell>();
+
+	private final ArrayList<Cell> cellsThatContainMeInFormula = new ArrayList<Cell>();
+
+	public Cell(int theRow, int theCol) {
+		myRow = theRow;
+		myCol = theCol;
+	}
 	/**
 	 * Sets the formula of the Cell to the formula provided.
 	 * @param theFormula The formula for the cell to be set to.
@@ -63,12 +75,12 @@ public class Cell {
 	public void evaluate(Spreadsheet theSpreadsheet) {
 		Stack expTreeTokenStack = SpreadSheetUtility.getFormula(myFormula);
 		ExpressionTreeNode root = ExpressionTreeNode.GetExpressionTree(expTreeTokenStack);
-		System.out.println("Test eval in cell");
+		//System.out.println("Test eval in cell");
 		ExpressionTree.printTree(root);
-		System.out.println("");
-		System.out.println("Test eval in cell end");
+		//System.out.println("");
+		//System.out.println("Test eval in cell end");
 		myValue = ExpressionTree.evaluate(root, theSpreadsheet);
-		System.out.println(myValue);
+		//System.out.println(myValue);
 	}
 
 	/**
@@ -92,6 +104,89 @@ public class Cell {
 	 * @return Returns the value in the cell.
 	 */
 	public Integer getValue() {
+		//if (myValue == null) {
+			//return 0;
+		//} else {
+			//return myValue;
+		//}
 		return myValue;
+	}
+
+	public ArrayList<Cell> getCellsInMyFormula() {
+		return cellsInMyFormula;
+	}
+
+	public ArrayList<Cell> getCellsThatContainThisInFormula() {
+		return cellsThatContainMeInFormula;
+	}
+
+	public void createListOfPrerequisites(String formula, Spreadsheet theSpreadsheet) {
+		char ch = ' ';
+		CellToken cellToken;
+		int index = 0;
+		while (index < formula.length() ) {
+			// get rid of leading whitespace characters
+			while (index < formula.length() ) {
+				ch = formula.charAt(index);
+				if (!Character.isWhitespace(ch)) {
+					break;
+				}
+				index++;
+			}
+			if (index == formula.length() ) {
+				break;
+			}
+			if (Character.isUpperCase(ch)) {
+				// We found a cell reference token
+				//CellToken cellToken = new CellToken();
+				cellToken = new CellToken();
+				index = SpreadSheetUtility.getCellToken(formula, index, cellToken);
+				cellsInMyFormula.add(theSpreadsheet.getCell(cellToken.getRow(), cellToken.getColumn()));
+				theSpreadsheet.getCell(cellToken.getRow(), cellToken.getColumn()).addToCellsThatContainThisInFormula(this);
+				if (cellToken.getRow() == -1) {
+					break;
+				}
+
+			} else {
+				break;
+			}
+		}
+	}
+
+	public void clearLists() {
+		cellsThatContainMeInFormula.clear();
+		cellsInMyFormula.clear();
+	}
+
+	private void addToCellsThatContainThisInFormula(Cell cell) {
+		cellsThatContainMeInFormula.add(cell);
+	}
+
+	private void removeCellFromDependencyList(Cell cellRemoving) {
+		for (int i = 0; i < cellsInMyFormula.size(); i++) {
+			if (cellsInMyFormula.get(i).equals(cellRemoving)) {
+				cellsInMyFormula.remove(i);
+			}
+		}
+	}
+
+	public void removeSelfFromOtherCellsDependencyList(Spreadsheet theSpreadsheet) {
+		for (int i = 0; i < cellsThatContainMeInFormula.size(); i++) {
+			Cell cellThatContainsMeInFormula = cellsThatContainMeInFormula.get(i);
+			cellThatContainsMeInFormula.removeCellFromDependencyList(this);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return myFormula;
+	}
+
+	public int getRow() {
+		return myRow;
+	}
+
+	public int getColumn() {
+		return myCol;
 	}
 }

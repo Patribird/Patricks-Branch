@@ -28,7 +28,7 @@ public class ExpressionTree {
 		//System.out.println(expTreeNode.getToken()); // Pre-fix
 		if (expTreeNode.myLeft != null)
 			printTree(expTreeNode.myLeft);
-		System.out.print(expTreeNode.getToken() + " "); // In-fix
+		//System.out.print(expTreeNode.getToken() + " "); // In-fix
 		if (expTreeNode.myRight != null)
 			printTree(expTreeNode.myRight);
 		//System.out.println(expTreeNode.getToken()); // Post-fix
@@ -75,7 +75,9 @@ public class ExpressionTree {
 			if (c == null) { // Check if the cell actually exists.
 				return 0;
 			} else { // If it does then grab the value
-				return c.getValue();
+				//return c.getValue();
+				int val = c.getValue();
+				return val;
 			}
 		} else if (token instanceof OperatorToken) {
 			// Continue finding tokens that will form the

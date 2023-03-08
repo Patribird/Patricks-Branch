@@ -1,6 +1,7 @@
 package model.Spreadsheet.src.view;
 
 import model.Spreadsheet.src.controller.Spreadsheet;
+import model.Spreadsheet.src.model.Cell;
 
 import javax.swing.*;
 import java.awt.*;
@@ -214,6 +215,10 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
     }
 
     public void setCellText(int theRow, int theCol, String theText) {
+        if (myCells[theRow][theCol] == null) {
+            return;
+        }
         myCells[theRow][theCol].updateText(theText);
     }
+
 }
