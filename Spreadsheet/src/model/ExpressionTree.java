@@ -53,7 +53,7 @@ public class ExpressionTree {
 	}
 
 	/**
-	 * Evaluate parses the ExpressionTree and evaluates all expression.
+	 * Evaluate parses the ExpressionTree and evaluates all expressions.
 	 * It checks for the different types of tokens and then
 	 * @param expTreeNode The expression tree node and Token to parse.
 	 * @param s The spreadsheet that contains the needed cells.
@@ -83,13 +83,16 @@ public class ExpressionTree {
 			ExpressionTreeNode rightSubtree = expTreeNode.myRight;
 			ExpressionTreeNode leftSubtree  = expTreeNode.myLeft;
 
-			boolean isDoubleNeg = checkForDoubleNeg(expTreeNode);
+			// COMMENTED OUT SECTION HAS A BUG WHERE IT CAN'T
+			// DIFFERENTIATE BETWEEN DOUBLE NEGATIVES AND SUBTRACTING
+			// A NEGATIVE FROM A NEGATIVE.
+//			boolean isDoubleNeg = checkForDoubleNeg(expTreeNode);
 
 			char op = ((OperatorToken) token).getOperatorToken();
 			if (op == '+') {
 				return evaluate(rightSubtree, s) + evaluate(leftSubtree, s);
-			} else if (op == '-' && isDoubleNeg) {
-				return evaluate(leftSubtree, s) * -1 + (evaluate(rightSubtree, s));
+//			} else if (op == '-' && isDoubleNeg) {
+//				return evaluate(leftSubtree, s) * -1 + (evaluate(rightSubtree, s));
 			} else if (op == '-') {
 				return evaluate(leftSubtree, s) - evaluate(rightSubtree, s);
 			} else if (op == '*') {
@@ -103,28 +106,32 @@ public class ExpressionTree {
 		return -1; // Code should never get here
 	}
 
-	/**
-	 * Checks if the current root contains a negative operator as well as the if the
-	 * operator in the left child is a negative. This specifically targets double
-	 * negatives and takes advantage of the binary tree structure.
-	 * @param expTreeNode The expression tree node that contains an operator.
-	 * @return Returns if a double negative is present.
-	 */
-	private static boolean checkForDoubleNeg(ExpressionTreeNode expTreeNode) {
-		Token token = null;
-		Token leftToken = null;
-		try {
-			token = expTreeNode.getToken();
-			leftToken = expTreeNode.myLeft.getToken();
-		} catch (Exception e) {
-			return false;
-		}
-
-		if (token instanceof OperatorToken && leftToken instanceof OperatorToken) {
-			char firstToken = ((OperatorToken) token).getOperatorToken();
-			char secondToken = ((OperatorToken) leftToken).getOperatorToken();
-			return firstToken == '-' && secondToken == '-';
-		}
-		return false;
-	}
+//	/**
+//	 * Checks if the current root contains a negative operator as well as the if the
+//	 * operator in the left child is a negative. This specifically targets double
+//	 * negatives and takes advantage of the binary tree structure.
+//	 * @param expTreeNode The expression tree node that contains an operator.
+//	 * @return Returns if a double negative is present.
+//	 */
+//	private static boolean checkForDoubleNeg(ExpressionTreeNode expTreeNode) {
+//		Token token;
+//		Token leftToken;
+//		Token rightToken;
+//		try {
+//			token = expTreeNode.getToken();
+//			leftToken = expTreeNode.myLeft.getToken();
+//			rightToken = expTreeNode.myRight.getToken();
+//		} catch (Exception e) {
+//			return false;
+//		}
+//
+//		if (token instanceof OperatorToken && leftToken instanceof OperatorToken) {
+//			char firstToken = ((OperatorToken) token).getOperatorToken();
+//			char secondToken = ((OperatorToken) leftToken).getOperatorToken();
+//			return firstToken == '-' && secondToken == '-';
+//		} else if (token instanceof OperatorToken && leftToken instanceof LiteralToken) {
+//			return false;
+//		}
+//		return false;
+//	}
 }
