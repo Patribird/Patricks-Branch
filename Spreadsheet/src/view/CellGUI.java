@@ -18,6 +18,8 @@ public class CellGUI extends JPanel {
     private int myRow;
     private int myCol;
 
+    private boolean errorInCell;
+
     private JTextField myTextField;
 
     public CellGUI(final int theRow, final int theCol) {
@@ -38,7 +40,13 @@ public class CellGUI extends JPanel {
 
             @Override
             public void focusLost(FocusEvent e) {
-                setCellToNormal();
+                try {
+                    setCellToNormal(false);
+                    errorInCell = false;
+                } catch (Exception exception) {
+                    setCellToNormal(true);
+                    errorInCell = true;
+                }
             }
         });
 
@@ -46,7 +54,7 @@ public class CellGUI extends JPanel {
         setLayout(new BorderLayout());
         setSize(new Dimension(60, 20));
         add(myTextField, BorderLayout.CENTER);
-        setCellToNormal();
+        setCellToNormal(false);
         setVisible(true);
         myTextField.addKeyListener(new KeyAdapter() {
             /**
@@ -62,6 +70,7 @@ public class CellGUI extends JPanel {
                 }
             }
         });
+        //errorInCell = false;
     }
 
     public void highlightCell() {
@@ -72,6 +81,9 @@ public class CellGUI extends JPanel {
         String formula = "";
         if (Spreadsheet.getCell(myRow, myCol) != null) {
             formula = Spreadsheet.getCell(myRow, myCol).getFormula();
+        }
+        if (errorInCell) {
+            formula = myTextField.getText();
         }
         myTextField.setText(formula);
         System.out.println(formula);
@@ -84,7 +96,14 @@ public class CellGUI extends JPanel {
      *  if there are errors with the cell. Also changes
      *  the text in the cell to its value.
      */
-    public void setCellToNormal() {
+    public void setCellToNormal(boolean error) {
+        if (error) {
+            setBackground(ColorData.getColor(SpreadsheetGUI.theme, "error"));
+            myTextField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "error"));
+            System.out.println("error");
+            return;
+        }
+
         setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
         myTextField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
         if (!myTextField.getText().equals("")) {
@@ -95,7 +114,6 @@ public class CellGUI extends JPanel {
             value = Integer.toString(Spreadsheet.getCell(myRow, myCol).getValue());
         }
         myTextField.setText(value);
-        // Right now there is no way to see if there are errors in a cell.
     }
 
     private String getColumnString(int theColumn) {
@@ -110,8 +128,15 @@ public class CellGUI extends JPanel {
     }
 
     public void changeTheme() {
-        setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
-        myTextField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
+        if (!errorInCell) {
+            setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
+            myTextField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
+            myTextField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
+        } else {
+            System.out.println("error in cell");
+            setBackground(ColorData.getColor(SpreadsheetGUI.theme, "error"));
+            myTextField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "error"));
+        }
         setBorder(BorderFactory.createLineBorder(ColorData.getColor(SpreadsheetGUI.theme, "border")));
         myTextField.setForeground(ColorData.getColor(SpreadsheetGUI.theme, "text"));
     }
