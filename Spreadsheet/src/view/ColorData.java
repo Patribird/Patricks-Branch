@@ -21,6 +21,15 @@ public class ColorData {
 
     private static final Color DARK_THEME_ERROR_COLOR = new Color(54, 38, 47);
 
+    private static final Color PINK_THEME_HIGHLIGHT_COLOR = new Color(246, 161, 253);
+    private static final Color PINK_THEME_NORMAL_COLOR = new Color(248, 67, 244);
+
+    private static final Color PINK_THEME_BORDER_COLOR = new Color(131, 0, 130);
+
+    private static final Color PINK_THEME_TEXT_COLOR = new Color(54, 0, 33);
+
+    private static final Color PINK_THEME_ERROR_COLOR = new Color(192, 27, 51);
+
     public static Color getColor(String theTheme, String theColor) {
         if (theTheme.equals("dark")) {
             if (theColor.equals("highlight")) {
@@ -36,6 +45,21 @@ public class ColorData {
                 return DARK_THEME_ERROR_COLOR;
             }
             return DARK_THEME_NORMAL_COLOR;
+        }
+        if (theTheme.equals("pink")) {
+            if (theColor.equals("highlight")) {
+                return PINK_THEME_HIGHLIGHT_COLOR;
+            }
+            if (theColor.equals("border")) {
+                return PINK_THEME_BORDER_COLOR;
+            }
+            if (theColor.equals("text")) {
+                return PINK_THEME_TEXT_COLOR;
+            }
+            if (theColor.equals("error")) {
+                return PINK_THEME_ERROR_COLOR;
+            }
+            return PINK_THEME_NORMAL_COLOR;
         }
         if (theColor.equals("highlight")) {
             return DEFAULT_THEME_HIGHLIGHT_COLOR;

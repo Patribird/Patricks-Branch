@@ -87,7 +87,7 @@ public class CellGUI extends JPanel {
         }
         myTextField.setText(formula);
         System.out.println(formula);
-        System.out.println("focus gained");
+        //System.out.println("focus gained");
     }
 
     /**
