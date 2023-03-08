@@ -74,7 +74,8 @@ public class CellGUI extends JPanel {
             formula = Spreadsheet.getCell(myRow, myCol).getFormula();
         }
         myTextField.setText(formula);
-        //System.out.println("focus gained");
+        System.out.println(formula);
+        System.out.println("focus gained");
     }
 
     /**
@@ -109,7 +110,8 @@ public class CellGUI extends JPanel {
     }
 
     public void changeTheme() {
-        setCellToNormal();
+        setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
+        myTextField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
         setBorder(BorderFactory.createLineBorder(ColorData.getColor(SpreadsheetGUI.theme, "border")));
         myTextField.setForeground(ColorData.getColor(SpreadsheetGUI.theme, "text"));
     }
