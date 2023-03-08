@@ -46,6 +46,8 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     private static JRadioButtonMenuItem darkThemeButton;
     private static JRadioButtonMenuItem pinkThemeButton;
+
+    private static JRadioButtonMenuItem natureThemeButton;
     private static JPanel mainPanel = new JPanel();
     private static JPanel cellPanel = new JPanel();
 
@@ -137,14 +139,17 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         lightThemeButton = new JRadioButtonMenuItem("Light");
         darkThemeButton = new JRadioButtonMenuItem("Dark");
         pinkThemeButton = new JRadioButtonMenuItem("Pink");
+        natureThemeButton = new JRadioButtonMenuItem("Nature");
         ButtonGroup group = new ButtonGroup();
         group.add(lightThemeButton);
         group.add(darkThemeButton);
         group.add(pinkThemeButton);
+        group.add(natureThemeButton);
         lightThemeButton.setSelected(true);
         themesMenu.add(lightThemeButton);
         themesMenu.add(darkThemeButton);
         themesMenu.add(pinkThemeButton);
+        themesMenu.add(natureThemeButton);
         menuBar.add(fileMenu);
         menuBar.add(optionsMenu);
         setJMenuBar(menuBar);
@@ -165,6 +170,12 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeTheme("pink");
+            }
+        });
+        natureThemeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeTheme("nature");
             }
         });
     }
