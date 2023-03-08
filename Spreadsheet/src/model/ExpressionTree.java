@@ -62,11 +62,12 @@ public class ExpressionTree {
 	public static int evaluate(ExpressionTreeNode expTreeNode, Spreadsheet s) {
 		// Literals and Cell tokens are leaves so just return whatever value is associated with them
 		// But Operators will have both a left and right child, so we need to evaluate those as well.
+		Token token;
 		if (expTreeNode == null) {
-			expTreeNode = new ExpressionTreeNode(new LiteralToken(0), null, null);
+			token = new LiteralToken(0);
+		} else {
+			token = expTreeNode.getToken();
 		}
-		Token token = expTreeNode.getToken();
-
 		if (token instanceof LiteralToken) {
 			return ((LiteralToken) token).getValue();
 		} else if (token instanceof CellToken) {
@@ -82,13 +83,13 @@ public class ExpressionTree {
 			ExpressionTreeNode rightSubtree = expTreeNode.myRight;
 			ExpressionTreeNode leftSubtree  = expTreeNode.myLeft;
 
-			if (expTreeNode.myLeft == null && expTreeNode.myRight != null && ((OperatorToken) token).getOperatorToken() == '-') {
-				expTreeNode.myLeft = new ExpressionTreeNode(new LiteralToken(0), null, null);
-			}
+			boolean isDoubleNeg = checkForDoubleNeg(expTreeNode);
 
 			char op = ((OperatorToken) token).getOperatorToken();
 			if (op == '+') {
 				return evaluate(rightSubtree, s) + evaluate(leftSubtree, s);
+			} else if (op == '-' && isDoubleNeg) {
+				return evaluate(leftSubtree, s) * -1 + (evaluate(rightSubtree, s));
 			} else if (op == '-') {
 				return evaluate(leftSubtree, s) - evaluate(rightSubtree, s);
 			} else if (op == '*') {
@@ -100,5 +101,30 @@ public class ExpressionTree {
 		}
 
 		return -1; // Code should never get here
+	}
+
+	/**
+	 * Checks if the current root contains a negative operator as well as the if the
+	 * operator in the left child is a negative. This specifically targets double
+	 * negatives and takes advantage of the binary tree structure.
+	 * @param expTreeNode The expression tree node that contains an operator.
+	 * @return Returns if a double negative is present.
+	 */
+	private static boolean checkForDoubleNeg(ExpressionTreeNode expTreeNode) {
+		Token token = null;
+		Token leftToken = null;
+		try {
+			token = expTreeNode.getToken();
+			leftToken = expTreeNode.myLeft.getToken();
+		} catch (Exception e) {
+			return false;
+		}
+
+		if (token instanceof OperatorToken && leftToken instanceof OperatorToken) {
+			char firstToken = ((OperatorToken) token).getOperatorToken();
+			char secondToken = ((OperatorToken) leftToken).getOperatorToken();
+			return firstToken == '-' && secondToken == '-';
+		}
+		return false;
 	}
 }
