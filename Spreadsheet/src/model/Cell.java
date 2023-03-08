@@ -11,6 +11,7 @@ import java.util.Stack;
  * @author Patrick Hern
  * @author Nathameion Montgomery
  * @author Tim Ratsko
+ * @author Moon Chang
  */
 public class Cell {
 	/** The formula of the cell. */
@@ -63,6 +64,7 @@ public class Cell {
 		ExpressionTreeNode root = ExpressionTreeNode.GetExpressionTree(expTreeTokenStack);
 		System.out.println("Test eval in cell");
 		ExpressionTree.printTree(root);
+		System.out.println("");
 		System.out.println("Test eval in cell end");
 		myValue = ExpressionTree.evaluate(root, theSpreadsheet);
 		System.out.println(myValue);

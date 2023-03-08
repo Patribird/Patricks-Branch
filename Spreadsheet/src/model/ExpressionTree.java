@@ -9,6 +9,7 @@ import model.Spreadsheet.src.controller.Spreadsheet;
  * @author Patrick Hern
  * @author Nathameion Montgomery
  * @author Tim Ratsko
+ * @author Moon Chang
  */
 public class ExpressionTree {
 	/** Boolean for if the ExpressionTree contains the root. */
@@ -20,22 +21,22 @@ public class ExpressionTree {
 
 	/**
 	 * Recursive method to print out the tree nodes in pre, in,
-	 * and post fixes. Though pre and in are commented out.
+	 * and post fixes. Though post and in are commented out.
 	 * @param expTreeNode The expression tree node to print.
 	 */
 	public static void printTree(ExpressionTreeNode expTreeNode) {
 		//System.out.println(expTreeNode.getToken()); // Pre-fix
 		if (expTreeNode.myLeft != null)
 			printTree(expTreeNode.myLeft);
-		//System.out.println(expTreeNode.getToken()); // In-fix
+		System.out.print(expTreeNode.getToken() + " "); // In-fix
 		if (expTreeNode.myRight != null)
 			printTree(expTreeNode.myRight);
-		System.out.println(expTreeNode.getToken()); // Post-fix
+		//System.out.println(expTreeNode.getToken()); // Post-fix
 	}
 
 	/**
 	 * Generates a string of the ExpressionTree. Also, recursive and
-	 * in post-fix order.
+	 * in in-fix order.
 	 * @param expTreeNode The expression tree node to print.
 	 * @return Returns a String of the ExpressionTree.
 	 */
@@ -43,9 +44,12 @@ public class ExpressionTree {
 		String out = "";
 		if (expTreeNode.myLeft != null)
 			out += stringTree(expTreeNode.myLeft) + " ";
+
+		out +=expTreeNode.getToken().toString(); // In-fix
+
 		if (expTreeNode.myRight != null)
-			out += stringTree(expTreeNode.myRight) + " ";
-		return out +=expTreeNode.getToken().toString(); // Post-fix
+			out += " " + stringTree(expTreeNode.myRight);
+		return out;
 	}
 
 	/**

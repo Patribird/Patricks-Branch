@@ -17,6 +17,7 @@ import static model.Spreadsheet.src.model.OperatorToken.*;
  * @author Patrick Hern
  * @author Nathameion Montgomery
  * @author Tim Ratsko
+ * @author Moon Chang
  */
 public class SpreadsheetApp {
 
@@ -133,7 +134,7 @@ public class SpreadsheetApp {
         ExpressionTreeNode root = ExpressionTreeNode.GetExpressionTree(expTreeTokenStack);
         // DEBUG CODE
         ExpressionTree.printTree(root);
-        System.out.println(ExpressionTree.stringTree(root));
+        System.out.println("");
         System.out.println(ExpressionTree.evaluate(root, theSpreadsheet));
         String postFix = ""; // Temp Code
         // This code prints out the expression stack from
