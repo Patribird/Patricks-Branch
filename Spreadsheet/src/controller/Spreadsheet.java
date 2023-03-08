@@ -137,9 +137,11 @@ public class Spreadsheet {
      *                           setting the formula.
      * @param inOrder The proper order of the equation.
      */
-    public void changeCellFormulaAndRecalculate(CellToken cellToken, String expTreeTokenString, String inOrder) {
+    public void changeCellFormulaAndRecalculate(CellToken cellToken, String expTreeTokenString,
+                                                String inOrder, ExpressionTreeNode expTreeNode) {
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell(cellToken.getRow(), cellToken.getColumn());
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormula(expTreeTokenString);
+        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setMyExpressionTree(expTreeNode);
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormulaInOrder(inOrder);
 
         //mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].evaluate(this);

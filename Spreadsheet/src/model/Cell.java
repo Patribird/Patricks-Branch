@@ -27,6 +27,8 @@ public class Cell {
 	/** The formula in order of how it was typed. */
 	private String myInOrderFormula;
 
+	private ExpressionTreeNode myTreeNodeRoot;
+
 	private final ArrayList<Cell> cellsInMyFormula = new ArrayList<Cell>();
 
 	private final ArrayList<Cell> cellsThatContainMeInFormula = new ArrayList<Cell>();
@@ -57,6 +59,14 @@ public class Cell {
 		System.out.println("My Formula : " + myFormula);
 	}
 
+	/** Sets the tree node root as the formula that should be evaluated.
+	 *
+	 * @param theExpTreeNode The tree node that has the entire expression.
+	 */ // This is here because there were issues with the formula.
+	public void setMyExpressionTree(ExpressionTreeNode theExpTreeNode) {
+		myTreeNodeRoot = theExpTreeNode;
+	}
+
 	/**
 	 * Sets the in order formula for proper displaying of the
 	 * formula the user input.
@@ -73,14 +83,17 @@ public class Cell {
 	 * @param theSpreadsheet The spreadsheet to be evaluated.
 	 */
 	public void evaluate(Spreadsheet theSpreadsheet) {
-		Stack expTreeTokenStack = SpreadSheetUtility.getFormula(myFormula);
-		ExpressionTreeNode root = ExpressionTreeNode.GetExpressionTree(expTreeTokenStack);
-		//System.out.println("Test eval in cell");
-		ExpressionTree.printTree(root);
-		//System.out.println("");
-		//System.out.println("Test eval in cell end");
-		myValue = ExpressionTree.evaluate(root, theSpreadsheet);
+
+//		Stack expTreeTokenStack = SpreadSheetUtility.getFormula(myFormula);
+//		ExpressionTreeNode root = ExpressionTreeNode.GetExpressionTree(expTreeTokenStack);
+//		//System.out.println("Test eval in cell");
+//		ExpressionTree.printTree(root);
+//		//System.out.println("");
+//		//System.out.println("Test eval in cell end");
+//		myValue = ExpressionTree.evaluate(root, theSpreadsheet);
 		//System.out.println(myValue);
+
+		myValue = ExpressionTree.evaluate(myTreeNodeRoot, theSpreadsheet);
 	}
 
 	/**

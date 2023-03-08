@@ -135,7 +135,7 @@ public class SpreadsheetApp {
         // DEBUG CODE
         ExpressionTree.printTree(root);
         System.out.println("");
-        System.out.println(ExpressionTree.evaluate(root, theSpreadsheet));
+        System.out.println("The answer should be " + ExpressionTree.evaluate(root, theSpreadsheet));
         String postFix = ""; // Temp Code
         // This code prints out the expression stack from
         // top to bottom (that is, reverse of postfix).
@@ -148,7 +148,7 @@ public class SpreadsheetApp {
         System.out.println(postFix);
 
 
-        theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, ExpressionTree.stringTree(root), inputFormula);
+        theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, ExpressionTree.stringTree(root), inputFormula, root);
         System.out.println();
     }
 
@@ -161,6 +161,7 @@ public class SpreadsheetApp {
         ExpressionTreeNode root = ExpressionTreeNode.GetExpressionTree(expTreeTokenStack);
         // DEBUG CODE
         ExpressionTree.printTree(root);
+        System.out.println("The answer should be " + ExpressionTree.evaluate(root, theSpreadsheet));
         String postFix = ""; // Temp Code
         // This code prints out the expression stack from
         // top to bottom (that is, reverse of postfix).
@@ -170,7 +171,7 @@ public class SpreadsheetApp {
 
             postFix += expTreeToken + " ";
         }
-        theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, ExpressionTree.stringTree(root), inputFormula);
+        theSpreadsheet.changeCellFormulaAndRecalculate(cellToken, ExpressionTree.stringTree(root), inputFormula, root);
     }
 
     /**
