@@ -1,8 +1,5 @@
 package model.Spreadsheet.src.view;
 
-import model.Spreadsheet.src.controller.Spreadsheet;
-import model.Spreadsheet.src.model.Cell;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,47 +14,57 @@ import java.beans.PropertyChangeListener;
  * @author Nathameion Montgomery
  */
 public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
+    /** Default toolkit. */
     private static final Toolkit KIT = Toolkit.getDefaultToolkit();
-    /**
-     * The users screen size.
-     */
+    /**  The users screen size. */
     private static final Dimension SCREEN_SIZE = KIT.getScreenSize();
-
+    /** Sets the Dimensions of the program window to a 90% of the screen space. */
     private static final Dimension PROGRAM_DEFAULT_SIZE = new Dimension(SCREEN_SIZE.width * 9 / 10, SCREEN_SIZE.height * 9 / 10);
-
+    /** Sets the Dimensions of the cells to be decently large in the program. */
     private static final Dimension CELL_PANEL_SIZE = new Dimension(PROGRAM_DEFAULT_SIZE.width * 6, PROGRAM_DEFAULT_SIZE.height * 2);
-
+    /** The number of rows for the side label. */
     private static int rows = 57; // The top row is for labels (57 is the default number of rows)
-
+    /** The number of columns for the top label. */
     private static int columns = 57; // The left column is for labels (57 is the default number of columns)
-
+    /** The defualt theme for the spreadsheet. */
     public static String theme = "light";
-
+    /** Contain for the borderComponents. */
     public JComponent[] borderComponents;
+    /** The layout of the cells. */
     private static LayoutManager CELL_LAYOUT;
+    /** The GUI element for the spreadsheet cells. */
     private static CellGUI[][] myCells;
-
+    /** The file menu. */
     private static JMenu fileMenu;
-
+    /** The exit button menu option */
     private static JMenuItem exitButton;
-
+    /** The options' menu. */
     private static JMenu optionsMenu;
-
+    /** The themes' submenu. */
     private static JMenu themesMenu;
-
+    /** The radio button for the light theme. */
     private static JRadioButtonMenuItem lightThemeButton;
-
+    /** The radio button for the dark theme. */
     private static JRadioButtonMenuItem darkThemeButton;
+    /** The radio button for the pink theme. */
     private static JRadioButtonMenuItem pinkThemeButton;
-
+    /** The radio button for the nature theme. */
     private static JRadioButtonMenuItem natureThemeButton;
-
+    /** The radio button for the fun theme. */
     private static JRadioButtonMenuItem funThemeButton;
+    /** The main panel.. */
     private static JPanel mainPanel = new JPanel();
+    /** The cell panel. */
     private static JPanel cellPanel = new JPanel();
-
+    /** The scroll pane. */
     private JScrollPane scrollPane;
 
+    /**
+     * Public constructor for the GUI that calls the other
+     * methods to set up the GUI.
+     * @param theRows The rows of the spreadsheet.
+     * @param theColumns The columns of the spreadsheet.
+     */
     public SpreadsheetGUI(int theRows, int theColumns) {
         rows = theRows;
         columns = theColumns;
@@ -78,6 +85,11 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     }
 
+    /**
+     * Sets up the general GUI, the cells, and the menus.
+     * @param theRows The rows in the spreadsheet.
+     * @param theColumns The columns in the spreadsheet.
+     */
     private void setupGUI(int theRows, int theColumns) {
         setTitle("Spreadsheet");
         scrollPane = new JScrollPane(cellPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -94,6 +106,9 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         setVisible(true);
     }
 
+    /**
+     * Set the dimensions and attributes of the Cells in the GUI.
+     */
     private void setUpCells() {
         cellPanel.setLayout(CELL_LAYOUT);
         cellPanel.setPreferredSize(CELL_PANEL_SIZE);
@@ -134,6 +149,10 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         cellPanel.setVisible(true);
     }
 
+    /**
+     * Sets up the menu and the menu options found in the
+     * GUI.
+     */
     private void setUpMenu() {
         JMenuBar menuBar = new JMenuBar();
         menuBar.setAlignmentX(SwingConstants.LEFT);
@@ -203,6 +222,12 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         });
     }
 
+    /**
+     * Takes an integer that represents the column and then converts it
+     * into a character (like excel and other spreadsheets).
+     * @param theColumn The integer representation of the
+     * @return Returns a String of the column. A = 0, B, C, ...,  AA
+     */
     private String getColumnString(int theColumn) {
         StringBuilder result = new StringBuilder();
         int currentCol = theColumn;
@@ -214,6 +239,10 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         return result.reverse().toString();
     }
 
+    /**
+     * Changes the color theme of the spreadsheet.
+     * @param newTheme The name of the new theme.
+     */
     private void changeTheme(String newTheme) {
         if (newTheme.equals(theme)) {
             return;
@@ -236,6 +265,12 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Sets the cells text.
+     * @param theRow The integer value for the row.
+     * @param theCol The integer value for the column.
+     * @param theText The cell text to be displayed.
+     */
     public void setCellText(int theRow, int theCol, String theText) {
         if (myCells[theRow][theCol] == null) {
             return;
@@ -243,6 +278,14 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         myCells[theRow][theCol].updateText(theText);
     }
 
+    /**
+     * If there is an error in a cell then set the cell to contain
+     * an error.
+     * @param row The integer value for the row.
+     * @param col The integer value for the column.
+     * @param setting The setting of the error.
+     * @param message The message to be displayed.
+     */
     public void setErrorInCell(int row, int col, boolean setting, String message) {
         try {
             myCells[row + 1][col + 1].setErrorInCell(setting, message);
