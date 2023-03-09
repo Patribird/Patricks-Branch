@@ -58,6 +58,12 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     private JScrollPane scrollPane;
 
+    /**
+     * Public constructor for the GUI that calls the other
+     * methods to set up the GUI.
+     * @param theRows The rows of the spreadsheet.
+     * @param theColumns The columns of the spreadsheet.
+     */
     public SpreadsheetGUI(int theRows, int theColumns) {
         rows = theRows;
         columns = theColumns;
@@ -78,6 +84,11 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     }
 
+    /**
+     * Sets up the general GUI, the cells, and the menus.
+     * @param theRows The rows in the spreadsheet.
+     * @param theColumns The columns in the spreadsheet.
+     */
     private void setupGUI(int theRows, int theColumns) {
         setTitle("Spreadsheet");
         scrollPane = new JScrollPane(cellPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -94,6 +105,9 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         setVisible(true);
     }
 
+    /**
+     * Set the dimensions and attributes of the Cells in the GUI.
+     */
     private void setUpCells() {
         cellPanel.setLayout(CELL_LAYOUT);
         cellPanel.setPreferredSize(CELL_PANEL_SIZE);
@@ -134,6 +148,10 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         cellPanel.setVisible(true);
     }
 
+    /**
+     * Sets up the menu and the menu options found in the
+     * GUI.
+     */
     private void setUpMenu() {
         JMenuBar menuBar = new JMenuBar();
         menuBar.setAlignmentX(SwingConstants.LEFT);
@@ -203,6 +221,12 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         });
     }
 
+    /**
+     * Takes an integer that represents the column and then converts it
+     * into a character (like excel and other spreadsheets).
+     * @param theColumn The integer representation of the
+     * @return Returns a String of the column. A = 0, B, C, ...,  AA
+     */
     private String getColumnString(int theColumn) {
         StringBuilder result = new StringBuilder();
         int currentCol = theColumn;
@@ -214,6 +238,10 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         return result.reverse().toString();
     }
 
+    /**
+     * Changes the color theme of the spreadsheet.
+     * @param newTheme The name of the new theme.
+     */
     private void changeTheme(String newTheme) {
         if (newTheme.equals(theme)) {
             return;
@@ -236,6 +264,12 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Sets the cells text.
+     * @param theRow The integer value for the row.
+     * @param theCol The integer value for the column.
+     * @param theText The cell text to be displayed.
+     */
     public void setCellText(int theRow, int theCol, String theText) {
         if (myCells[theRow][theCol] == null) {
             return;
@@ -243,6 +277,14 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         myCells[theRow][theCol].updateText(theText);
     }
 
+    /**
+     * If there is an error in a cell then set the cell to contain
+     * an error.
+     * @param row The integer value for the row.
+     * @param col The integer value for the column.
+     * @param setting The setting of the error.
+     * @param message The message to be displayed.
+     */
     public void setErrorInCell(int row, int col, boolean setting, String message) {
         try {
             myCells[row + 1][col + 1].setErrorInCell(setting, message);
