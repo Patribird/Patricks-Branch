@@ -343,7 +343,6 @@ public class Spreadsheet {
                 currentCell.removeSelfFromOtherCellsDependencyList(this);
                 currentCell.evaluate(this);
                 myGUI.setCellText(currentCell.getRow(), currentCell.getColumn(), Integer.toString(currentCell.getValue()));
-
                 if (currentCell.getFormula() != null) {
                     //System.out.println("evaluating cell with formula " + currentCell.getFormula());
                 }
@@ -354,10 +353,19 @@ public class Spreadsheet {
             for (int row = 0; row < mySpreadsheet.length; row++) {
                 for (int col = 0; col < mySpreadsheet[0].length; col++) {
                     try {
-                        myGUI.setCellText(row + 1, col + 1,
-                                Integer.toString(mySpreadsheet[row][col].getValue()));
+                        //// Puts values in text fields
+                        //System.out.println("formula: " + mySpreadsheet[row][col].getFormula());
+
+                        if (mySpreadsheet[row][col].getFormula() == null) {
+                            myGUI.setCellText(row + 1, col + 1,"");
+                        }
+                        if (!mySpreadsheet[row][col].getFormula().equals("0")) {
+                            myGUI.setCellText(row + 1, col + 1,
+                                    Integer.toString(mySpreadsheet[row][col].getValue()));
+                        }
                     } catch (Exception e) {
-                        myGUI.setCellText(row, col, "");
+                        //myGUI.setCellText(row, col, mySpreadsheet[row][col].toString());
+                        //e.printStackTrace();
                     }
                 }
             }

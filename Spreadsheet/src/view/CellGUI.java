@@ -157,6 +157,10 @@ public class CellGUI extends JPanel {
 
     public void setErrorInCell(boolean setting, String message) {
         errorInCell = setting;
-        setCellToNormal(setting, message);
+        if (message == null) {
+            setCellToNormal(setting);
+        } else {
+            setCellToNormal(setting, message);
+        }
     }
 }
