@@ -15,13 +15,20 @@ import java.awt.event.*;
  * @author Moon chang
  */
 public class CellGUI extends JPanel {
+    /** The rows of the cell GUI. */
     private int myRow;
+    /** The columns of the cell GUI. */
     private int myCol;
-
+    /** Boolean of if there's an error in the cell. */
     private boolean errorInCell;
-
+    /** The text field in the cells. */
     private JTextField myTextField;
 
+    /**
+     * Sets up all the CellGUI and the action listeners on them.
+     * @param theRow The rows in the CellGUI.
+     * @param theCol The columns in the CellGUI.
+     */
     public CellGUI(final int theRow, final int theCol) {
         myRow = theRow;
         myCol = theCol;
@@ -79,6 +86,10 @@ public class CellGUI extends JPanel {
         //errorInCell = false;
     }
 
+    /**
+     * When a cell is selected or has an error, then there
+     * it is highlighted with the correct color.
+     */
     public void highlightCell() {
         setBackground(ColorData.getColor(SpreadsheetGUI.theme, "highlight"));
         myTextField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "highlight"));
@@ -126,11 +137,22 @@ public class CellGUI extends JPanel {
         myTextField.setText(value);
     }
 
+    /**
+     * Sets a cell back to its normal state.
+     * @param error If there is an error or not.
+     * @param message The message to be displayed.
+     */
     public void setCellToNormal(boolean error, String message) {
         setCellToNormal(error);
         myTextField.setText(message);
     }
 
+    /**
+     * Gets the String representation of the integer used for the
+     * columns.
+     * @param theColumn The integer column.
+     * @return Returns the string representation of the column.
+     */
     private String getColumnString(int theColumn) {
         StringBuilder result = new StringBuilder();
         int currentCol = theColumn;
@@ -142,6 +164,9 @@ public class CellGUI extends JPanel {
         return result.reverse().toString();
     }
 
+    /**
+     * Changes the theme of the spreadsheet app.
+     */
     public void changeTheme() {
         if (!errorInCell) {
             setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
@@ -156,10 +181,19 @@ public class CellGUI extends JPanel {
         myTextField.setForeground(ColorData.getColor(SpreadsheetGUI.theme, "text"));
     }
 
+    /**
+     * Updates the text in the text field.
+     * @param newText The new text to be displayed.
+     */
     public void updateText(final String newText) {
         myTextField.setText(newText);
     }
 
+    /**
+     * Sets the error message in the cell.
+     * @param setting If the error message needs setting.
+     * @param message The message to be set to.
+     */
     public void setErrorInCell(boolean setting, String message) {
         errorInCell = setting;
         if (message == null) {
