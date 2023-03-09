@@ -83,16 +83,6 @@ public class Cell {
 	 * @param theSpreadsheet The spreadsheet to be evaluated.
 	 */
 	public void evaluate(Spreadsheet theSpreadsheet) {
-
-//		Stack expTreeTokenStack = SpreadSheetUtility.getFormula(myFormula);
-//		ExpressionTreeNode root = ExpressionTreeNode.GetExpressionTree(expTreeTokenStack);
-//		//System.out.println("Test eval in cell");
-//		ExpressionTree.printTree(root);
-//		//System.out.println("");
-//		//System.out.println("Test eval in cell end");
-//		myValue = ExpressionTree.evaluate(root, theSpreadsheet);
-		//System.out.println(myValue);
-
 		myValue = ExpressionTree.evaluate(myTreeNodeRoot, theSpreadsheet);
 	}
 
@@ -117,11 +107,6 @@ public class Cell {
 	 * @return Returns the value in the cell.
 	 */
 	public Integer getValue() {
-		//if (myValue == null) {
-			//return 0;
-		//} else {
-			//return myValue;
-		//}
 		return myValue;
 	}
 

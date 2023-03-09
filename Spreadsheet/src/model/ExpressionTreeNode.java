@@ -36,27 +36,11 @@ public class ExpressionTreeNode {
 	}
 
 	/**
-	 * Sets the root of the expression tree node.
-	 * @param theRoot The new root of the expression tree.
-	 */
-	public void setMyRoot(ExpressionTreeNode theRoot) {
-		myRoot = theRoot;
-	}
-
-	/**
 	 * Getter that returns the token to the user.
 	 * @return Returns the Token to the user.
 	 */
 	public Token getToken() {
 		return myToken;
-	}
-
-	/**
-	 * Setter method for the Token.
-	 * @param theToken The Token to be set to.
-	 */
-	public void setToken(final Token theToken) {
-		myToken = theToken;
 	}
 
 	/**
@@ -72,14 +56,6 @@ public class ExpressionTreeNode {
 				(ch == Div) ||
 				(ch == Exponent) ||
 				(ch == LeftParen) );
-	}
-
-	// Build an expression tree from a stack of ExpressionTreeTokens
-	void BuildExpressionTree (Stack<Token> s) {
-		myRoot = GetExpressionTree(s);
-		if (!s.isEmpty()) {
-			System.out.println("Error in BuildExpressionTree.");
-		}
 	}
 
 	/**

@@ -5,8 +5,6 @@ import model.Spreadsheet.src.view.SpreadsheetGUI;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Stack;
 
 /**
  * The Spreadsheet class contains all relevant information to the
@@ -24,7 +22,7 @@ public class Spreadsheet {
     /** The GUI for the spreadsheet. */
     private final SpreadsheetGUI myGUI;
     /** The ArrayList of Cells that holds the evaluation order. */
-    ArrayList<Cell> evaluationOrder = new ArrayList<Cell>();
+    ArrayList<Cell> evaluationOrder = new ArrayList<>();
 
     /**
      * The constructor for the spreadsheet that initializes the
@@ -80,14 +78,6 @@ public class Spreadsheet {
     }
 
     /**
-     * Returns the spreadsheet ot the calling program.
-     * @return Returns the spreadsheet of Cells to the user.
-     */
-    public Cell[][] getMySpreadsheet() {
-        return mySpreadsheet;
-    }
-
-    /**
      * Prints all the formulas in the spreadsheet out to the console
      * with row and column labels.
      */
@@ -115,24 +105,6 @@ public class Spreadsheet {
      * Changes the cells formula and recalculates the expression.
      * @param cellToken The CellToken passed where a new cell will
      *                  be declared and set.
-     * @param expTreeTokenStack The expressionTreeStack String for
-     *                           setting the formula.
-     * @param inOrder The proper order of the equation.
-     */
-    public void changeCellFormulaAndRecalculate(CellToken cellToken, Stack expTreeTokenStack, String inOrder) {
-        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()] = new Cell(cellToken.getRow(), cellToken.getColumn());
-        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormula(expTreeTokenStack);
-        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormulaInOrder(inOrder);
-        mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].evaluate(this);
-
-        myGUI.setCellText(cellToken.getRow() + 1, cellToken.getColumn() + 1,
-                Integer.toString(mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].getValue()));
-    }
-
-    /**
-     * Changes the cells formula and recalculates the expression.
-     * @param cellToken The CellToken passed where a new cell will
-     *                  be declared and set.
      * @param expTreeTokenString The expressionTreeToken String for
      *                           setting the formula.
      * @param inOrder The proper order of the equation.
@@ -144,7 +116,6 @@ public class Spreadsheet {
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setMyExpressionTree(expTreeNode);
         mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].setFormulaInOrder(inOrder);
 
-        //mySpreadsheet[cellToken.getRow()][cellToken.getColumn()].evaluate(this);
         this.evaluate();
     }
 
@@ -353,9 +324,7 @@ public class Spreadsheet {
             for (int row = 0; row < mySpreadsheet.length; row++) {
                 for (int col = 0; col < mySpreadsheet[0].length; col++) {
                     try {
-                        //// Puts values in text fields
-                        //System.out.println("formula: " + mySpreadsheet[row][col].getFormula());
-
+                        // Puts values in text fields
                         if (mySpreadsheet[row][col].getFormula() == null) {
                             myGUI.setCellText(row + 1, col + 1,"");
                         }

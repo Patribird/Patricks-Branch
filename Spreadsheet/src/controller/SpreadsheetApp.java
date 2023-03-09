@@ -20,7 +20,9 @@ import static model.Spreadsheet.src.model.OperatorToken.*;
  * @author Moon Chang
  */
 public class SpreadsheetApp {
+    /** The spreadsheet object. */
     static Spreadsheet theSpreadsheet;
+    /** The number of rows and column in the spreadsheet. */
     private static final int ROWS_AND_COLUMNS = 57;
 
     /**
@@ -152,6 +154,12 @@ public class SpreadsheetApp {
         System.out.println();
     }
 
+    /**
+     * GUIChangeCell works with the
+     * @param row Integer of the row.
+     * @param col Integer of the column.
+     * @param inputFormula String of the input formula.
+     */
     public static void GUIChangeCell(int row, int col, String inputFormula) {
         Stack expTreeTokenStack = SpreadSheetUtility.getFormula(inputFormula);
         Token expTreeToken;
