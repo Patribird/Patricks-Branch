@@ -39,6 +39,8 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
 
     private static JMenu fileMenu;
 
+    private static JMenuItem exitButton;
+
     private static JMenu optionsMenu;
 
     private static JMenu themesMenu;
@@ -49,6 +51,8 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
     private static JRadioButtonMenuItem pinkThemeButton;
 
     private static JRadioButtonMenuItem natureThemeButton;
+
+    private static JRadioButtonMenuItem funThemeButton;
     private static JPanel mainPanel = new JPanel();
     private static JPanel cellPanel = new JPanel();
 
@@ -134,6 +138,8 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         JMenuBar menuBar = new JMenuBar();
         menuBar.setAlignmentX(SwingConstants.LEFT);
         fileMenu = new JMenu("File");
+        exitButton = new JMenuItem("Exit");
+        fileMenu.add(exitButton);
         optionsMenu = new JMenu("Options");
         themesMenu = new JMenu("Themes");
         optionsMenu.add(themesMenu);
@@ -141,16 +147,19 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
         darkThemeButton = new JRadioButtonMenuItem("Dark");
         pinkThemeButton = new JRadioButtonMenuItem("Pink");
         natureThemeButton = new JRadioButtonMenuItem("Nature");
+        funThemeButton = new JRadioButtonMenuItem("Fun");
         ButtonGroup group = new ButtonGroup();
         group.add(lightThemeButton);
         group.add(darkThemeButton);
         group.add(pinkThemeButton);
         group.add(natureThemeButton);
+        group.add(funThemeButton);
         lightThemeButton.setSelected(true);
         themesMenu.add(lightThemeButton);
         themesMenu.add(darkThemeButton);
         themesMenu.add(pinkThemeButton);
         themesMenu.add(natureThemeButton);
+        themesMenu.add(funThemeButton);
         menuBar.add(fileMenu);
         menuBar.add(optionsMenu);
         setJMenuBar(menuBar);
@@ -177,6 +186,19 @@ public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changeTheme("nature");
+            }
+        });
+
+        funThemeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeTheme("fun");
+            }
+        });
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
     }
