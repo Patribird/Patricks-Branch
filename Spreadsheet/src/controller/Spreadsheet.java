@@ -272,6 +272,10 @@ public class Spreadsheet {
         }
     }
 
+    /** Evaluates the spreadsheet.
+     *  Topologically sorts all the cells in the spreadsheet then evaluates them in that order.
+     *  Also takes not of any cycles.
+     */
     public void evaluate() {
         for (int row = 0; row < mySpreadsheet.length; row++) {
             for (int col = 0; col < mySpreadsheet[0].length; col++) {
@@ -341,6 +345,7 @@ public class Spreadsheet {
         }
     }
 
+    /** Class to compare cells in a list, based off of how many cells contain that cell in the formula. */
     class CellPrerequisiteComparator implements Comparator<Cell> {
         @Override
         public int compare(Cell cell1, Cell cell2) {
