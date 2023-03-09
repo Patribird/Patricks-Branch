@@ -37,6 +37,14 @@ public class ColorData {
 
     private static final Color NATURE_THEME_ERROR_COLOR = new Color(252, 82, 82);
 
+    private static final Color FUN_THEME_HIGHLIGHT_COLOR = new Color(58, 134, 255);
+    private static final Color FUN_THEME_NORMAL_COLOR = new Color(246, 255, 0);
+    private static final Color FUN_THEME_BORDER_COLOR = new Color(255, 0, 110);
+
+    private static final Color FUN_THEME_TEXT_COLOR = new Color(108, 1, 106);
+
+    private static final Color FUN_THEME_ERROR_COLOR = new Color(252, 82, 82);
+
     public static Color getColor(String theTheme, String theColor) {
         if (theTheme.equals("dark")) {
             if (theColor.equals("highlight")) {
@@ -83,6 +91,23 @@ public class ColorData {
             }
             return NATURE_THEME_NORMAL_COLOR;
         }
+
+        if (theTheme.equals("fun")) {
+            if (theColor.equals("highlight")) {
+                return FUN_THEME_HIGHLIGHT_COLOR;
+            }
+            if (theColor.equals("border")) {
+                return FUN_THEME_BORDER_COLOR;
+            }
+            if (theColor.equals("text")) {
+                return FUN_THEME_TEXT_COLOR;
+            }
+            if (theColor.equals("error")) {
+                return FUN_THEME_ERROR_COLOR;
+            }
+            return FUN_THEME_NORMAL_COLOR;
+        }
+
         if (theColor.equals("highlight")) {
             return DEFAULT_THEME_HIGHLIGHT_COLOR;
         }
