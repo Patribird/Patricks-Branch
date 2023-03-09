@@ -1,8 +1,5 @@
 package model.Spreadsheet.src.view;
 
-import model.Spreadsheet.src.controller.Spreadsheet;
-import model.Spreadsheet.src.model.Cell;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,45 +14,49 @@ import java.beans.PropertyChangeListener;
  * @author Nathameion Montgomery
  */
 public class SpreadsheetGUI extends JFrame implements PropertyChangeListener {
+    /** Default toolkit. */
     private static final Toolkit KIT = Toolkit.getDefaultToolkit();
-    /**
-     * The users screen size.
-     */
+    /**  The users screen size. */
     private static final Dimension SCREEN_SIZE = KIT.getScreenSize();
-
+    /** Sets the Dimensions of the program window to a 90% of the screen space. */
     private static final Dimension PROGRAM_DEFAULT_SIZE = new Dimension(SCREEN_SIZE.width * 9 / 10, SCREEN_SIZE.height * 9 / 10);
-
+    /** Sets the Dimensions of the cells to be decently large in the program. */
     private static final Dimension CELL_PANEL_SIZE = new Dimension(PROGRAM_DEFAULT_SIZE.width * 6, PROGRAM_DEFAULT_SIZE.height * 2);
-
+    /** The number of rows for the side label. */
     private static int rows = 57; // The top row is for labels (57 is the default number of rows)
-
+    /** The number of columns for the top label. */
     private static int columns = 57; // The left column is for labels (57 is the default number of columns)
-
+    /** The defualt theme for the spreadsheet. */
     public static String theme = "light";
-
+    /** Contain for the borderComponents. */
     public JComponent[] borderComponents;
+    /** The layout of the cells. */
     private static LayoutManager CELL_LAYOUT;
+    /** The GUI element for the spreadsheet cells. */
     private static CellGUI[][] myCells;
-
+    /** The file menu. */
     private static JMenu fileMenu;
-
+    /** The exit button menu option */
     private static JMenuItem exitButton;
-
+    /** The options' menu. */
     private static JMenu optionsMenu;
-
+    /** The themes' submenu. */
     private static JMenu themesMenu;
-
+    /** The radio button for the light theme. */
     private static JRadioButtonMenuItem lightThemeButton;
-
+    /** The radio button for the dark theme. */
     private static JRadioButtonMenuItem darkThemeButton;
+    /** The radio button for the pink theme. */
     private static JRadioButtonMenuItem pinkThemeButton;
-
+    /** The radio button for the nature theme. */
     private static JRadioButtonMenuItem natureThemeButton;
-
+    /** The radio button for the fun theme. */
     private static JRadioButtonMenuItem funThemeButton;
+    /** The main panel.. */
     private static JPanel mainPanel = new JPanel();
+    /** The cell panel. */
     private static JPanel cellPanel = new JPanel();
-
+    /** The scroll pane. */
     private JScrollPane scrollPane;
 
     /**
