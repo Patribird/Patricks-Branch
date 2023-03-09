@@ -5,6 +5,7 @@ import java.awt.*;
 /**
  * The color data for the themes.
  * @author Nathameion Montgomery
+ * @author Patrick Hern
  */
 public class ColorData {
     /** The color for the default highlight. */
