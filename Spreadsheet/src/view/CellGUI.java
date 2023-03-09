@@ -86,7 +86,7 @@ public class CellGUI extends JPanel {
         myTextField.grabFocus();
         String formula = "";
         if (Spreadsheet.getCell(myRow, myCol) != null) {
-            formula = Spreadsheet.getCell(myRow, myCol).getFormula();
+            formula = Spreadsheet.getCell(myRow, myCol).getInOrderFormula();
         }
         if (errorInCell) {
             formula = myTextField.getText();
