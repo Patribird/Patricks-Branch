@@ -41,8 +41,13 @@ public class CellGUI extends JPanel {
             @Override
             public void focusLost(FocusEvent e) {
                 try {
-                    setCellToNormal(false);
-                    errorInCell = false;
+                    if (!myTextField.getText().equals("")) {
+                        setCellToNormal(false);
+                        errorInCell = false;
+                    } else {
+                        setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
+                        myTextField.setBackground(ColorData.getColor(SpreadsheetGUI.theme, "normal"));
+                    }
                 } catch (Exception exception) {
                     setCellToNormal(true);
                     errorInCell = true;
